@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title id="title">Apibrėžimo sritis - Lygis 1.1</title>
+        <link rel="stylesheet" href="level.css">
+        <script src="../otherScripts/interval.js"></script>
+        <script src="../otherScripts/graph.js"></script>
+        <script src="../otherScripts/circle.js"></script>
+        <script src="../otherScripts/globalVariables.js"></script>
+        <script src="../otherScripts/graphFunctions.js"></script>
+        <script src="../otherScripts/utilityFunctions.js"></script>
+        <script src="level.js" defer></script>
+    </head>
+    <body>
+        <button id="goBackButton" onclick="goBack()">Gryžti į lygių pasirinkimą</button>
+        <h1 id="levelTag">Apibrėžimo sritis - Lygis 1.1</h1>
+        <h1 id="ats"></h1>
+        <div class="container" id="container">
+            <img id="graph" class="graph">
+            <div class="overlay" id="overlay">
+                <div id="intervalContainer"></div>
+                
+                <canvas id="filledArea" width="700px" height="500px"></canvas>
+                <p id="startCircleLabel"></p>
+                <p id="endCircleLabel"></p>
+            </div>
+        </div>
+        <div id="apibrezimoSritiesContainer"></div>
+        <div id="buttons">
+            <button id="changeStartX" onclick="changeCircleType(0)">Pakeisti pradžios X</button>
+            <button id="changeEndX" onclick="changeCircleType(1)">Pakeisti pabaigos X</button><br>
+            <button id="negInfButton" onclick="writeInfSymbol(false)">Įdėti -∞</button>
+            <button id="posInfButton" onclick="writeInfSymbol(true)">Įdėti ∞</button><br>
+            <button id="answerButton" onclick="checkIfCorrect()">Patvirtinti atsakymą</button>
+            <button id="showAnswerButton" onclick="showAnswer()">Parodyti atsakymą</button>
+        </div>
+        <div id="infinitySpots"></div>
+    </body>
+</html>

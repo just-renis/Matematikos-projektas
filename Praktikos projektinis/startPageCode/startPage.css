@@ -1,0 +1,70 @@
+.container 
+{
+    margin: auto;
+    position: relative;
+    width: 800px;
+    height: 600px;
+}
+h1
+{
+    text-align: center;
+}
+#buttons
+{
+    margin-top: 5%;
+    text-align: center;
+}
+button
+{
+    margin-top: 10px;
+    background-color: lightgreen;
+    width: 30%;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    border: 5px dashed black;
+}
+.levelButton
+{
+    visibility: hidden;
+}
+#level2
+{
+    background-color: rgb(0, 255, 100);
+}
+#clearProgress
+{
+    position: absolute;
+    background-color: white;
+    width: 15%;
+    font-size: 18px;
+    margin: 0;
+}
+#level3
+{
+    background-color: green;
+}
+#level4
+{
+    background-color: rgb(255, 255, 130);
+}
+#level5
+{
+    background-color: yellow;
+}
+#level6
+{
+    background-color: gold;
+}
+#level7
+{
+    background-color: rgb(255, 139, 137);
+}
+#level8
+{
+    background-color: rgb(255, 130, 60);
+}
+#level9
+{
+    background-color: darkred;
+}

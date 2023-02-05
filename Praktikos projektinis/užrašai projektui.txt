@@ -1,0 +1,186 @@
+/>>>   APIBRĖŽIMO SRITIS
+>>> Žaidėjams parodoma, kur brėžinyje ieškoti apibrėžimo srities (spalvinama x ašis po grafiku), su iš anksto nustatytomis slankiklio reikšmėmis
+Pavyzdys
+1.0     https://www.geogebra.org/m/pb5v8vfw   Ap.sr. D(f)=[-4; 6]
+
+>>> Žaidėjams leidžiama patiems grafike nuspalvinti apibrėžio sritį, su iš anksto nustatytomis slankiklio reikšmėmis
+1.1     https://www.geogebra.org/m/etv6u2fj   Ap.sr. D(f)=[-3; 2]
+1.2     https://www.geogebra.org/m/smfjhq7k   Ap.sr. D(f)=[-8; 4]
+1.3     https://www.geogebra.org/m/zg4wg34t   Ap.sr. D(f)=[-8; 3]
+
+>>> Žaidėjams parodoma, kaip apibrėžimo sritis užrašoma intervalu, iš nuspalvintos dalies grafike, kai intervalo galai užspalvinti burbuliukai.
+Pavyzdys
+2.0     https://www.geogebra.org/m/tjjqdphm   Ap.sr. D(f)=[-5; 5]
+
+>>> Žaidėjams leidžiama patiems grafike nuspalvinti apibrėžimo sritį, su iš anksto nustatytomis slankiklio reikšmėmis ir užrašyti gautas reikšmes intervalu.
+2.1     https://www.geogebra.org/m/t3qh5phf   Ap.sr. D(f)=[0; 9]
+2.2     https://www.geogebra.org/m/dg8s2w8t   Ap.sr. D(f)=[-0,5; 0,3]
+2.3     https://www.geogebra.org/m/wbrbhwap   Ap.sr. D(f)=[-0,7; 0,1]
+
+>>> Žaidėjams parodoma, kaip žymėti grafike tuščiaviduriu rutuliuku pažymėtą grafiko galą, pasirenkant slankiklio reikšmę ir kaip tokią apibrėžimo sritį užrašyti intervalu.
+Pavyzdys
+3.0     https://www.geogebra.org/m/hvgvfqhn   Ap.sr. D(f)=[-1; 1]
+
+>>> Žaidėjams leidžiama patiems nuspalvinti apibrėžimo sritį grafike (pasirenkant vieną iš dviejų galimų slankiklio reikšmių) ir užrašyti gautą intervalą 
+3.1     https://www.geogebra.org/m/yux4nsh9   Ap.sr. D(f)=(-6; 7)
+3.2     https://www.geogebra.org/m/fexdacj9   Ap.sr. D(f)=(-40; 20)
+3.3     https://www.geogebra.org/m/wjd2387b   Ap.sr. D(f)=(-3; 1]
+3.4     https://www.geogebra.org/m/wszfnw5n   Ap.sr. D(f)=(-3; 2]
+3.5     https://www.geogebra.org/m/rqm22rcy   Ap.sr. D(f)=[-2; 4)
+3.6     https://www.geogebra.org/m/ezk57xms   Ap.sr. D(f)=[-3; 3)
+3.7     https://www.geogebra.org/m/k8cbywa6   Ap.sr. D(f)=(-3; 3)
+3.8     https://www.geogebra.org/m/p52pr6rm   Ap.sr. D(f)=[-4; 4]
+3.9     https://www.geogebra.org/m/hhzfgh68   Ap.sr. D(f)=(-5; 4]
+3.10    https://www.geogebra.org/m/wqexnp7z   Ap.sr. D(f)=(-3; 3]
+3.11    https://www.geogebra.org/m/pfbqzdpv   Ap.sr. D(f)=[-1; 5)
+3.12    https://www.geogebra.org/m/ctdcjfzm   Ap.sr. D(f)=(-6; 4]
+3.13    https://www.geogebra.org/m/cjhaasnj   Ap.sr. D(f)=(-3; 5)
+3.14    https://www.geogebra.org/m/uwvxffvt   Ap.sr. D(f)=(-5; 3]
+3.15    https://www.geogebra.org/m/wpuhyh7f   Ap.sr. D(f)=[-5; 4)
+
+
+>>> Žaidėjams parodoma, kaip nuspalvinama ir užrašoma apibrėžimo sritis tada, kai reikšmės juda į begalybę (parodoma, kada yra +∞, kada -∞, parodoma, kad skliaustai lenkti).
+Pavyzdžiai
+4.0.1   https://www.geogebra.org/m/uhwj8snr   Ap.sr. D(f)=(-∞; 2)
+4.0.2   https://www.geogebra.org/m/wmtzvvzd   Ap.sr. D(f)=[0; +∞)
+
+>>> Žaidėjams leidžiama patiems nuspalvinti apibrėžimo sritį grafike (pasirenkant vieną iš galimų slankiklio reikšmių) ir užrašyti gautą intervalą
+4.1     https://www.geogebra.org/m/azupt2ft   Ap.sr. D(f)=(-∞; 2]
+4.2     https://www.geogebra.org/m/uvnrhmzb   Ap.sr. D(f)=(-∞; +∞)
+4.3     https://www.geogebra.org/m/n6azz6rk   Ap.sr. D(f)=(2; +∞)
+4.4     https://www.geogebra.org/m/ycndyxgg   Ap.sr. D(f)=(-∞; 2)
+4.5     https://www.geogebra.org/m/yfb7zxrp   Ap.sr. D(f)=(-∞; +∞)
+4.6     https://www.geogebra.org/m/xkaeavza   Ap.sr. D(f)=[-8; +∞)
+4.7     https://www.geogebra.org/m/ygxna6pm   Ap.sr. D(f)=(-6; +∞)
+4.8     https://www.geogebra.org/m/nxbtb9xt   Ap.sr. D(f)=(-∞; +∞)
+4.9     https://www.geogebra.org/m/y63rfjhs   Ap.sr. D(f)=[-4; +∞)
+4.10    https://www.geogebra.org/m/xkybbryv   Ap.sr. D(f)=[-6; 6)
+4.11    https://www.geogebra.org/m/rqa7bcyc   Ap.sr. D(f)=(-6; 6]
+4.12    https://www.geogebra.org/m/ppvb39qz   Ap.sr. D(f)=(-∞; +∞)
+4.13    https://www.geogebra.org/m/vpuspfzb   Ap.sr. D(f)=(-∞; +∞)
+4.14    https://www.geogebra.org/m/p9syzykn   Ap.sr. D(f)=(-4; +∞)
+4.15    https://www.geogebra.org/m/hqmyuzhy   Ap.sr. D(f)=(-∞; +∞)
+
+>>> Žaidėjams parodoma, kokią įtaką funkcijos vardas (f(x), g(x), h(x) ir t.t.) turi apibrėžimo srities užrašui (D(f), D(g), D(h) ir t.t.)
+Pavyzdys
+5.0     https://www.geogebra.org/m/wjtxhkck   Ap.sr. D(g)=[-10; 30)
+
+>>> Žaidėjams leidžiama patiems nustatyti apibrėžimo sritį grafike, ir ją užrašyti intervalu, patiems skliaustuose įrašant tinkamą funkcijos vardą.
+5.1     https://www.geogebra.org/m/as29k4sh   Ap.sr. D(h)=(-∞; 4]
+5.2     https://www.geogebra.org/m/anq9tfpm   Ap.sr. D(t)=(-6; 9]
+5.3     https://www.geogebra.org/m/m4kxy2dc   Ap.sr. D(f)=(-∞; 6)
+5.4     https://www.geogebra.org/m/mkcxqgpz   Ap.sr. D(w)=[-5; +∞)
+5.5     https://www.geogebra.org/m/xzybpepz   Ap.sr. D(d)=[-3; 5]
+5.6     https://www.geogebra.org/m/khbjndbv   Ap.sr. D(g)=(-∞; +∞)
+5.7     https://www.geogebra.org/m/u4ddkvnk   Ap.sr. D(r)=(-∞; 2]
+5.8     https://www.geogebra.org/m/fsmhsk74   Ap.sr. D(h)=(-3; 5]
+5.9     https://www.geogebra.org/m/hqrqfzeb   Ap.sr. D(v)=(-9; 1)
+5.10    https://www.geogebra.org/m/sysjpjmc   Ap.sr. D(f)=[-6; 6)
+
+
+>>> Žaidėjams parodoma, kaip žymima grafike, jei funkcija baigiasi lenkta tiese (visada žymimas užspalvintas rutuliukas) ir kaip užrašomas intervalas
+Pavyzdys
+6.0     https://www.geogebra.org/m/h9xut4aw   Ap.sr. D(h)=[-3; 3]
+
+>>> Žaidėjams leidžiama patiems nustatyti apibrėžimo sritį grafike, ją užrašyti intervalu, patiems skliaustuose įrašant tinkamą funkcijos vardą.
+6.1     https://www.geogebra.org/m/v6jaw7xj   Ap.sr. D(g)=[-10; -2]
+6.2     https://www.geogebra.org/m/xnwptp3g   Ap.sr. D(t)=(2; 7]
+6.3     https://www.geogebra.org/m/hydzpjha   Ap.sr. D(h)=[-4; 3]
+6.4     https://www.geogebra.org/m/abjjmq39   Ap.sr. D(d)=[-7; 7]
+6.5     https://www.geogebra.org/m/nw9a4bye   Ap.sr. D(s)=[-4; 4)
+6.6     https://www.geogebra.org/m/cpfvfzeg   Ap.sr. D(m)=[-4; 9]
+
+
+>>> Žaidėjams parodoma, kaip žymima, jei toje pačioje vietoje viena grafiko dalis baigiasi pilnu rutuliuku, o kita dalis prasideda pilnu rutuliuku.
+Pavyzdys
+7.0     https://www.geogebra.org/m/retfp4x3   Ap.sr. D(g)=(-∞; 5)
+
+>>> Žaidėjams leidžiama patiems nustatyti apibrėžimo sritį grafike, ją užrašyti intervalu, patiems skliaustuose įrašant tinkamą funkcijos vardą.
+7.1     https://www.geogebra.org/m/zgmk5c9u   Ap.sr. D(h)=(-∞; +∞)
+7.2     https://www.geogebra.org/m/wgbpe3ag   Ap.sr. D(k)=[-2; 2]
+
+
+>>> Žaidėjams parodoma, kaip žymima, jei toje pačioje vietoje yra ir tuščiaviduris ir pilnaviduris rutuliukas/tiesė.
+Pavyzdys
+8.0     https://www.geogebra.org/m/shjdt2bj   Ap.sr. D(f)=[-8; 5]
+
+>>> Žaidėjams leidžiama patiems nustatyti apibrėžimo sritį grafike, ją užrašyti intervalu, patiems skliaustuose įrašant tinkamą funkcijos vardą.
+8.1     https://www.geogebra.org/m/nt2w8enw   Ap.sr. D(d)=[-4; 4]
+8.2     https://www.geogebra.org/m/usapdtzx   Ap.sr. D(t)=(-6; +∞)
+
+
+>>> Žaidėjams parodoma, kaip žymima, jei linija persidengia su tuščiu arba pilnu rutuliuku
+Pavyzdžiai
+9.0.1   https://www.geogebra.org/m/aeua9pyg   Ap.sr. D(s)=(-3; 3)
+9.0.2   https://www.geogebra.org/m/vjvnq2ze   Ap.sr. D(h)=[-3; 2)
+
+>>> Žaidėjams leidžiama patiems nustatyti apibrėžimo sritį grafike, ją užrašyti intervalu, patiems skliaustuose įrašant tinkamą funkcijos vardą.
+9.1     https://www.geogebra.org/m/cp4revhd   Ap.sr. D(k)=[-5; 5)
+9.2     https://www.geogebra.org/m/b6nbjgrh   Ap.sr. D(h)=(-5; 5)
+
+
+>>> Žaidėjams parodoma, kaip žymima, jei ant linijos yra tuščiaviduris rutuliukas (trūkis) (sąjungos ženklas turi būti užrašomas paspaudus pateiktą klavišą)
+Pavyzdys
+10.0    https://www.geogebra.org/m/m3gzwvxp   Ap.sr. D(f)=[-4; 0)∪(0; 6]
+
+>>> Žaidėjams leidžiama patiems nustatyti apibrėžimo sritį grafike, ją užrašyti intervalu, patiems skliaustuose įrašant tinkamą funkcijos vardą.
+10.1    https://www.geogebra.org/m/jruaggtm   Ap.sr. D(t)=(-∞; 0)∪(0; +∞)
+10.2    https://www.geogebra.org/m/pnprpdpa   Ap.sr. D(g)=(-∞; 1)∪(1; 3)
+
+
+>>> Žaidėjams parodoma, kaip žymima, jei funkciją sudaro kelios atskiros atkarpos/tiesės
+Pavyzdys
+11.0    https://www.geogebra.org/m/pj2jabfs   Ap.sr. D(f)=[-5; -1]∪[0; 6]
+
+>>> Žaidėjams leidžiama patiems nustatyti apibrėžimo sritį grafike, ją užrašyti intervalu, patiems skliaustuose įrašant tinkamą funkcijos vardą.
+11.1    https://www.geogebra.org/m/zqckejbw   Ap.sr. D(g)=(-6; -1]∪(2; 6]
+11.2    https://www.geogebra.org/m/wwwa4vxs   Ap.sr. D(h)=(-∞; -1)∪(1; +∞)
+
+
+>>> Žaidėjams parodoma, kaip užrašoma apibrėžimo sritis sudaryta iš taškų
+Pavyzdys
+12.0    https://www.geogebra.org/m/t9fswxn6   Ap.sr. D(d)=-4, -2, 0, 2, 4
+
+>>> Žaidėjams leidžiama patiems nustatyti apibrėžimo sritį grafike, ją užrašyti intervalu, patiems skliaustuose įrašant tinkamą funkcijos vardą.
+12.1    https://www.geogebra.org/m/nbpaaq4y   Ap.sr. D(w)=-5, -4, -3, -2, -1, 1, 2, 4
+12.2    https://www.geogebra.org/m/vwapng6k   Ap.sr. D(k)=-5, -4, -3, -2, -1, 0, 1, 2, 3, 4
+  
+
+
+>>> REIKŠMIŲ SRITIS
+>>> Žaidėjams parodoma, kur brėžinyje ieškoti reikšmių srities (spalvinama y ašis ties grafiku), su iš anksto nustatytomis slankiklio reikšmėmis
+Pavyzdys
+1.0     https://www.geogebra.org/m/pb5v8vfw   Reikšm.sr. E(f)=[-3; 2]
+
+>>> Žaidėjams leidžiama patiems grafike nuspalvinti reikšmių sritį, su iš anksto nustatytomis slankiklio reikšmėmis
+1.1     https://www.geogebra.org/m/etv6u2fj   Reikšm.sr. E(f)=[-5; 5]
+1.2     https://www.geogebra.org/m/tjjqdphm   Reikšm.sr. E(f)=[-5; 5]
+
+
+>>> Žaidėjams parodoma, kaip reikšmių sritis užrašoma intervalu, iš nuspalvintos dalies grafike, kai intervalo galai užspalvinti burbuliukai.
+Pavyzdys
+2.0     https://www.geogebra.org/m/pn2tx8je   Reikšm.sr. E(f)=[0; 3]
+
+>>> Žaidėjams leidžiama patiems grafike nuspalvinti reikšmių sritį, su iš anksto nustatytomis slankiklio reikšmėmis ir užrašyti gautas reikšmes intervalu.
+2.1     
+2.2     
+
+
+>>> Žaidėjams parodoma, kaip žymima grafike, jei funkcija baigiasi lenkta tiese (visada žymimas užspalvintas rutuliukas) ir kaip užrašomas intervalas
+Pavyzdys
+3.0     
+
+>>> Žaidėjams leidžiama patiems nustatyti reikšmių sritį grafike, ją užrašyti intervalu.
+3.1     
+3.2     
+
+
+>>> Žaidėjams parodoma, kaip žymėti grafike tuščiaviduriu rutuliuku pažymėtą grafiko galą, pasirenkant slankiklio reikšmę ir kaip tokią reikšmių sritį užrašyti intervalu.
+Pavyzdys
+4.0
+
+>>> Žaidėjams leidžiama patiems nuspalvinti reikšmių sritį grafike (pasirenkant vieną iš dviejų galimų slankiklio reikšmių) ir užrašyti gautą intervalą 
+4.1
+4.2
+
+
