@@ -28,28 +28,23 @@ window.onload = function()
     INTERVALS[INTERVALS.length - 1].open = false;
     if (currentGraph.currentLevel >= 4)
     {
-        createInfinitePosition();
+        createInfinitePosition(-25.6 + "%", -128);
+        createInfinitePosition(121.6 + "%", 758);
     }
     filledArea = document.getElementById("filledArea").getContext("2d");
     filledArea.fillStyle = "rgba(180, 180, 180, 0.4)";
     initializeNewGraph();
     setColor();
 }
-function createInfinitePosition()
+function createInfinitePosition(margin, position)
 {
     let div = document.getElementById("infinitySpots");
-    let interval1 = new Interval(INTERVALS.length, 0, 0);
-    let interval2 = new Interval(INTERVALS.length, 0, 0);
-    interval1.element.classList.add("infinityInterval");
-    interval2.element.classList.add("infinityInterval");
-    div.appendChild(interval1.element);
-    div.appendChild(interval2.element);
-    interval1.element.style.marginLeft = -25.6 + "%";
-    interval2.element.style.marginLeft = 121.6 + "%";
-    interval1.position = -128;
-    interval2.position = 758;
-    INTERVALS.push(interval1);
-    INTERVALS.push(interval2);
+    let interval = new Interval(INTERVALS.length, 0, 0);
+    interval.element.classList.add("infinityInterval");
+    div.appendChild(interval.element);
+    interval.element.style.marginLeft = margin;
+    interval.position = position;
+    INTERVALS.push(interval);
 }
 function circleDragSetupX(draggableCircle)
 {
@@ -189,11 +184,14 @@ function setIntervalPosition(draggableCircle, newPos)
             const targetRight = targetLeft + INTERVALS[i].element.getBoundingClientRect().width;
             if (newPos >= targetLeft && newPos <= targetRight) 
             {
-                console.log(targetLeft + " " + targetRight + " " + newPos);
                 if (draggableCircle.intervalSpot != -1) INTERVALS[draggableCircle.intervalSpot].open = true;
                 draggableCircle.intervalSpot = i;
                 INTERVALS[i].open = false;
-                return [INTERVALS[i].position, (i + currentGraph.start) / currentGraph.trueNumber];
+                let intervalNumber = (i + currentGraph.start) / currentGraph.trueNumber;
+                let labelNumber = intervalNumber > currentGraph.end ? whichInfinity(draggableCircle, intervalNumber) : intervalNumber;
+                if (INTERVALS[INTERVALS.length - 2].open) document.getElementById("plotNegInf").style.display = "none";
+                if (INTERVALS[INTERVALS.length - 1].open) document.getElementById("plotPosInf").style.display = "none";
+                return [INTERVALS[i].position, labelNumber];
             }
         }
     }
@@ -214,6 +212,21 @@ function setIntervalPosition(draggableCircle, newPos)
     else if (interval[0] != "∞") document.getElementById("plotPosInf").style.display = "none";
     return newPos;
 }*/
+function whichInfinity(draggableCircle, intervalNumber)
+{
+    if (intervalNumber > currentGraph.end + 1)
+    {
+        draggableCircle.switchType("white", "5px dashed");
+        document.getElementById("plotPosInf").style.display = "block";
+        return "∞";
+    }
+    else
+    {
+        draggableCircle.switchType("white", "5px dashed");
+        document.getElementById("plotNegInf").style.display = "block";
+        return "-∞";
+    }
+}
 function changeCircleType(index)
 {
     if (circles[index].circle.style.backgroundColor == "white") circles[index].switchType("black", "5px solid");
@@ -241,7 +254,7 @@ function initializeNewGraph()
         new Circle(axisX.querySelector('#endCircleX'), overlay.querySelector('#endLineX'), "left", overlay.querySelector("#endCircleLabel"), currentGraph.end)
     ];
     circles[0].intervalSpot = 0;
-    circles[1].intervalSpot = INTERVALS.length - 1;
+    circles[1].intervalSpot = INTERVALS.length - 3;
     currentGraph.setGraph();
     for (const interval of circles) updateLabelPos(interval);
     circleDragSetupX(circles[0]);
