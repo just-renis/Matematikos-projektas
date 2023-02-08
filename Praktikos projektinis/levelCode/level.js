@@ -18,9 +18,9 @@ window.onload = function()
     }
     else currentGraph = graph[0];
     let intervalContainer = document.getElementById("intervalContainer");
-    for (let i = 0; i <= currentGraph.intervalSize; i++) 
+    for (let i = 0; i <= currentGraph.intervalSize / currentGraph.intervalStep; i++) 
     {
-        let interval = new Interval(i, currentGraph.pixels, currentGraph.intervalSize);
+        let interval = new Interval(i, currentGraph.start + i * currentGraph.intervalStep, currentGraph.pixels, currentGraph.intervalSize / currentGraph.intervalStep, "NONE");
         intervalContainer.appendChild(interval.element);
         INTERVALS[i] = interval;
     }
@@ -28,18 +28,18 @@ window.onload = function()
     INTERVALS[INTERVALS.length - 1].open = false;
     if (currentGraph.currentLevel >= 4)
     {
-        createInfinitePosition(-25.6 + "%", -128);
-        createInfinitePosition(121.6 + "%", 758);
+        createInfinitePosition(-25.6 + "%", -119, "negative");
+        createInfinitePosition(121.6 + "%", 766, "positive");
     }
     filledArea = document.getElementById("filledArea").getContext("2d");
     filledArea.fillStyle = "rgba(180, 180, 180, 0.4)";
     initializeNewGraph();
     setColor();
 }
-function createInfinitePosition(margin, position)
+function createInfinitePosition(margin, position, whichInf)
 {
     let div = document.getElementById("infinitySpots");
-    let interval = new Interval(INTERVALS.length, 0, 0);
+    let interval = new Interval(INTERVALS.length, INTERVALS.length, 0, 0, whichInf);
     interval.element.classList.add("infinityInterval");
     div.appendChild(interval.element);
     interval.element.style.marginLeft = margin;
@@ -71,7 +71,7 @@ function circleDragSetupX(draggableCircle)
                 draggableCircle.label.innerText = whichInterval[1];
                 updateLabelPos(draggableCircle);
             }
-            drawFilledArea(circles[0].getBounds().left + 15, 15, circles[1].getBounds().left - circles[0].getBounds().left - 5, 480);
+            drawFilledArea(circles[0].getBounds().left + 13, 16, circles[1].getBounds().left - circles[0].getBounds().left, 480);
         }
         function onMouseUp() 
         {
@@ -187,8 +187,8 @@ function setIntervalPosition(draggableCircle, newPos)
                 if (draggableCircle.intervalSpot != -1) INTERVALS[draggableCircle.intervalSpot].open = true;
                 draggableCircle.intervalSpot = i;
                 INTERVALS[i].open = false;
-                let intervalNumber = (i + currentGraph.start) / currentGraph.trueNumber;
-                let labelNumber = intervalNumber > currentGraph.end ? whichInfinity(draggableCircle, intervalNumber) : intervalNumber;
+                let intervalNumber = INTERVALS[i].labelValue / currentGraph.trueNumber;
+                let labelNumber = INTERVALS[i].whichInf != "NONE" ? whichInfinity(draggableCircle, INTERVALS[i].whichInf) : intervalNumber;
                 if (INTERVALS[INTERVALS.length - 2].open) document.getElementById("plotNegInf").style.display = "none";
                 if (INTERVALS[INTERVALS.length - 1].open) document.getElementById("plotPosInf").style.display = "none";
                 return [INTERVALS[i].position, labelNumber];
@@ -212,9 +212,9 @@ function setIntervalPosition(draggableCircle, newPos)
     else if (interval[0] != "∞") document.getElementById("plotPosInf").style.display = "none";
     return newPos;
 }*/
-function whichInfinity(draggableCircle, intervalNumber)
+function whichInfinity(draggableCircle, whichInf)
 {
-    if (intervalNumber > currentGraph.end + 1)
+    if (whichInf == "positive")
     {
         draggableCircle.switchType("white", "5px dashed");
         document.getElementById("plotPosInf").style.display = "block";
@@ -254,12 +254,13 @@ function initializeNewGraph()
         new Circle(axisX.querySelector('#endCircleX'), overlay.querySelector('#endLineX'), "left", overlay.querySelector("#endCircleLabel"), currentGraph.end)
     ];
     circles[0].intervalSpot = 0;
-    circles[1].intervalSpot = INTERVALS.length - 3;
+    if (currentGraph.currentLevel >= 4) circles[1].intervalSpot = INTERVALS.length - 3;
+    else circles[1].intervalSpot = INTERVALS.length - 1;
     currentGraph.setGraph();
     for (const interval of circles) updateLabelPos(interval);
     circleDragSetupX(circles[0]);
     circleDragSetupX(circles[1]);
-    drawFilledArea(circles[0].getBounds().left + 15, 15, circles[1].getBounds().left - circles[0].getBounds().left - 5, 480);
+    drawFilledArea(circles[0].getBounds().left + 13, 16, circles[1].getBounds().left - circles[0].getBounds().left, 480);
 }
 function clearTheLevel()
 {

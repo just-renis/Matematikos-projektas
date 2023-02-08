@@ -64,7 +64,7 @@ function initializeNewGraph()
     ];
     currentGraph.setGraph();
     for (const interval of intervals) updateLabelPos(interval);
-    drawFilledArea(intervals[0].getBounds().left + 15, 15, intervals[1].getBounds().left - intervals[0].getBounds().left - 5, 480);
+    drawFilledArea(intervals[0].getBounds().left + 13, 15, intervals[1].getBounds().left - intervals[0].getBounds().left, 480);
     if (currentGraph.graphName.split(".")[1][0] == "0") document.getElementById("explanation").innerText = explanations[currentGraph.currentLevel - 1];
 }
 function clearTheLevel()
@@ -103,7 +103,7 @@ function updateIntervalPos(index, posX)
     intervals[index].circle.style.left = interval[1];
     intervals[index].label.innerText = interval[0] == "-∞" || interval[0] == "∞" ? interval[0] : interval[0] / currentGraph.trueNumber;
     updateLabelPos(intervals[index]);
-    drawFilledArea(intervals[0].getBounds().left + 15, 15, intervals[1].getBounds().left - intervals[0].getBounds().left - 5, 480);
+    drawFilledArea(intervals[0].getBounds().left + 13, 15, intervals[1].getBounds().left - intervals[0].getBounds().left, 480);
 }
 function enableInfPlot(plotId)
 {
