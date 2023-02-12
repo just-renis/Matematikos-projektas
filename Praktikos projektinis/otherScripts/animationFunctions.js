@@ -1,83 +1,69 @@
 let intervalAnimations =
 [
-    new Animation(0, 2000, 177), // 1.0
-    new Animation(1, 2000, -148), // 1.0
-    new Animation(0, 2000, 236), // 1.1
-    new Animation(1, 2000, -289), // 1.1
-    new Animation(0, 2000, 92), // 1.2
-    new Animation(1, 2000, -185), // 1.2
-    new Animation(0, 2000, 147), // 2.0
-    new Animation(1, 2000, -181), // 2.0
-    new Animation(0, 2000, 309), // 2.1
-    new Animation(1, 2000, 0), // 2.1
-    new Animation(0, 2000, 120), // 2.2
-    new Animation(1, 2000, -164), // 2.2
-    new Animation(0, 2000, 241), // 3.0
-    new Animation(1, 2000, -325), // 3.0
-    new Animation(0, 2000, 92), // 3.1
-    new Animation(1, 2000, -147), // 3.1
-    new Animation(0, 2000, 83), // 3.2
-    new Animation(1, 2000, -219), // 3.2
-    new Animation(0, 2000, -126), // 4.0.1
-    new Animation(1, 2000, -264), // 4.0.1
-    new Animation(0, 2000, 284), // 4.0.2
-    new Animation(1, 2000, 112), // 4.0.2
-    new Animation(0, 2000, -119), // 4.1
-    new Animation(1, 2000, -267), // 4.1
-    new Animation(0, 2000, -114.5), // 4.2
-    new Animation(1, 2000, 120.5), // 4.2
-    new Animation(0, 2000, 246), // 5.0
-    new Animation(1, 2000, -105), // 5.0
-    new Animation(0, 2000, -128), // 5.1
-    new Animation(1, 2000, -175), // 5.1
-    new Animation(0, 2000, 87), // 5.2
-    new Animation(1, 2000, -115), // 5.2
-    new Animation(0, 2000, 210), // 6.0
-    new Animation(1, 2000, -210), // 6.0
-    new Animation(0, 2000, 229), // 6.1
-    new Animation(1, 2000, -230), // 6.1
-    new Animation(0, 2000, 379), // 6.2
-    new Animation(1, 2000, -41), // 6.2
-    new Animation(0, 2000, -145), // 7.0
-    new Animation(1, 2000, -45), // 7.0
-    new Animation(0, 2000, -130.5), // 7.1
-    new Animation(1, 2000, 137.5), // 7.1
-    new Animation(0, 2000, 253), // 7.2
-    new Animation(1, 2000, -254), // 7.2
-    new Animation(0, 2000, 71), // 8.0
-    new Animation(1, 2000, -105), // 8.0
-    new Animation(0, 2000, 199), // 8.1
-    new Animation(1, 2000, -168), // 8.1
-    new Animation(0, 2000, 116), // 8.2
-    new Animation(1, 2000, 114), // 8.2
-    new Animation(0, 2000, 185), // 9.0.1
-    new Animation(1, 2000, -250), // 9.0.1
-    new Animation(0, 2000, 151), // 9.0.2
-    new Animation(1, 2000, -199), // 9.0.2
-    new Animation(0, 2000, 142), // 9.1
-    new Animation(1, 2000, -201), // 9.1
-    new Animation(0, 2000, 149), // 9.2
-    new Animation(1, 2000, -185) // 9.2
+    [6, 5], // 1.0
+    [9, 11], // 1.1
+    [3, 6], // 1.2
+    [5, 6], // 2.0
+    [9, 0], // 2.1
+    [3, 4], // 2.2
+    [6, 8], // 3.0
+    [3, 5], // 3.1
+    [3, 8], // 3.2
+    [20, 8], // 4.0.1
+    [9, 23], // 4.0.2
+    [20, 8], // 4.1
+    [29, 30], // 4.2
+    [7, 3], // 5.0
+    [23, 6], // 5.1
+    [3, 4], // 5.2
+    [6, 6], // 6.0
+    [5, 5], // 6.1
+    [9, 1], // 6.2
+    [15, 1], // 7.0
+    [19, 20], // 7.1
+    [7, 7], // 7.2
+    [2, 3], // 8.0
+    [6, 5], // 8.1
+    [4, 24], // 8.2
+    [6, 8], // 9.0.1
+    [3, 4], // 9.0.2
+    [5, 7], // 9.1
+    [4, 5] // 9.2
 ];
 function animateInterval(index, milliseconds, endPoint, onEndRun, onEndRunPoint)
 {
-    if (currentGraph.inputAnswer.includes("=") && currentGraph.inputAnswer.split("=")[1][2] == "∞") intervals[0].switchType("white", "5px dashed");
-    else if (currentGraph.inputAnswer[2] == "∞") intervals[0].switchType("white", "5px dashed");
-    if (currentGraph.inputAnswer.split(";")[1][0] == "∞") intervals[1].switchType("white", "5px dashed");
+    if (currentGraph.inputAnswer.includes("=") && currentGraph.inputAnswer.split("=")[1][2] == "∞") circles[0].switchType("white", "5px dashed");
+    else if (currentGraph.inputAnswer[2] == "∞") circles[0].switchType("white", "5px dashed");
+    if (currentGraph.inputAnswer.split(";")[1][2] == "∞") circles[1].switchType("white", "5px dashed");
     let startTime = Date.now();
     let intervalId = setInterval(function() 
     {
         const elapsedTime =  Date.now() - startTime;
         const progress = elapsedTime / milliseconds;
-        updateIntervalPos(index, progress * endPoint);
-        if (elapsedTime >= milliseconds) 
+        if (index == 0)
         {
-            if (parseInt(intervals[index].circle.getBoundingClientRect().left - axisX.getBoundingClientRect().left, 10) < 0) enableInfPlot("plotNegInf");
-            else if (parseInt(intervals[index].circle.getBoundingClientRect().left - axisX.getBoundingClientRect().left, 10) > currentGraph.pixels) enableInfPlot("plotPosInf");
+            updateIntervalPos(index, progress * intervals[endPoint].position);
+            intervals[endPoint].open = false;
+        }
+        else
+        {
+            if (endPoint == intervals.length - 1 && currentGraph.currentLevel >= 4) updateIntervalPos(index, progress * (intervals[endPoint].position - intervals[endPoint - 2].position + 24.8));
+            else updateIntervalPos(index, progress * -intervals[endPoint].position);
+            intervals[endPoint].open = false;
+        }
+        if (elapsedTime >= milliseconds)
+        {
+            if (parseInt(circles[index].circle.getBoundingClientRect().left - axisX.getBoundingClientRect().left, 10) < 0) enableInfPlot("plotNegInf");
+            else if (parseInt(circles[index].circle.getBoundingClientRect().left - axisX.getBoundingClientRect().left, 10) > currentGraph.pixels) enableInfPlot("plotPosInf");
             clearInterval(intervalId);
-            if (++currentGraph.finishedAnimations == currentGraph.finishedAnimLimit) document.getElementById("nextLevelButton").style.visibility = "visible";
+            if (++currentGraph.finishedAnimations == currentGraph.finishedAnimLimit) enableButtons();
             else if (currentGraph.finishedAnimations == 2) animateInput(currentGraph.inputAnswer, document.getElementById("apibrezimoSritis"));
-            if (onEndRun != -1) animateInterval(onEndRun, milliseconds, onEndRunPoint, -1);
+            if (onEndRun != -1) animateInterval(onEndRun, milliseconds / 2, onEndRunPoint, -1, 0);
+            if (currentGraph.currentLevel >= 4)
+            {
+                circleToInfPos(intervals.length - 2, "negInf", "plotNegInf");
+                circleToInfPos(intervals.length - 1, "posInf", "plotPosInf");
+            }
         }
     });
 }
@@ -90,7 +76,7 @@ function animateInput(text, inputField)
         if (i > text.length) 
         {
             clearInterval(intervalId);
-            if (++currentGraph.finishedAnimations == currentGraph.finishedAnimLimit) document.getElementById("nextLevelButton").style.visibility = "visible";
+            if (++currentGraph.finishedAnimations == currentGraph.finishedAnimLimit) enableButtons();
             else showClickedButton();
         }
     }, 250);
@@ -103,8 +89,8 @@ function showClickedButton()
     let needButton1, needButton2;
     if (currentGraph.inputAnswer.includes("=")) needButton1 = currentGraph.inputAnswer.split("=")[1][0] == "(" && currentGraph.inputAnswer.split("=")[1][2] != "∞";
     else needButton1 = currentGraph.inputAnswer[0] == "(" && currentGraph.inputAnswer[2] != "∞";
-    needButton2 = currentGraph.inputAnswer.slice(-1)[0] == ")" && currentGraph.inputAnswer.split(";")[1][0] != "∞";
-    if (!needButton1 && !needButton2) document.getElementById("nextLevelButton").style.visibility = "visible";
+    needButton2 = currentGraph.inputAnswer.slice(-1)[0] == ")" && currentGraph.inputAnswer.split(";")[1][2] != "∞";
+    if (!needButton1 && !needButton2) enableButtons();
     let intervalId = setInterval(function()
     {
         const elapsedTime =  Date.now() - startTime;
@@ -115,7 +101,7 @@ function showClickedButton()
             if (needButton1) changeCircleType(0);
             if (needButton2) changeCircleType(1);
             clearInterval(intervalId);
-            if (++currentGraph.finishedAnimations == currentGraph.finishedAnimLimit) document.getElementById("nextLevelButton").style.visibility = "visible";
+            if (++currentGraph.finishedAnimations == currentGraph.finishedAnimLimit) enableButtons();
         }
     });
 }
@@ -123,4 +109,9 @@ function enableBlink(button, elapsedTime)
 {
     if (parseInt(elapsedTime / 500) % 2 == 0) button.backgroundColor = "lightgreen";
     else if (parseInt(elapsedTime / 500) % 2 == 1) button.backgroundColor = "yellow";
+}
+function enableButtons()
+{
+    document.getElementById("nextLevelButton").style.visibility = "visible";
+    document.getElementById("repeatExample").style.visibility = "visible";
 }

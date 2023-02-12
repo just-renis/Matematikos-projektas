@@ -37,7 +37,7 @@ h1
 {
     background: black;
     width: 100%;
-    height: 5px;
+    height: 0px;
 }
 #axisY
 {
@@ -63,7 +63,7 @@ h1
 }
 #endCircleX
 {
-    top: -35px;
+    top: -34px;
 }
 #startCircleY
 {
@@ -137,6 +137,11 @@ p
     user-select: none;
     pointer-events: none;
 }
+#circleLabel1, #circleLabel2
+{
+    color: rgb(0, 200, 0);
+    z-index: 8;
+}
 h1
 {
     text-align: center;
@@ -183,7 +188,7 @@ button
     font-weight: bold;
     border: 3px solid rgb(0, 200, 100);
 }
-#nextLevelButton, #changeStartX, #changeEndX
+#nextLevelButton, #changeStartX, #changeEndX, #repeatExample
 {
     visibility: hidden;
 }
@@ -206,4 +211,15 @@ button
 #goBackButton
 {
     height: 40px;
+}
+#infinitySpots
+{
+    margin: auto;
+    width: 600px;
+    height: 100%;
+    position: relative;
+}
+.infinityInterval
+{
+    position: absolute;
 }

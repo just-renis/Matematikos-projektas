@@ -1,12 +1,15 @@
 class Circle
 {
-    constructor(circle, line, lineBorder, label, currentNumber)
+    static circleAmount = 1;
+    constructor(circle, line, lineBorder, intervalLabel, currentNumber, circleLabel)
     {
         this.circle = circle;
         this.line = line;
         this.lineBorder = lineBorder;
-        this.label = label;
-        this.label.innerText = currentNumber / currentGraph.trueNumber;
+        this.intervalLabel = intervalLabel;
+        this.circleLabel = circleLabel;
+        this.circleLabel.innerText = Circle.circleAmount++;
+        this.intervalLabel.innerText = (currentNumber / currentGraph.trueNumber).toLocaleString('de-DE');
         this.circle.style.backgroundColor = "black";
         this.intervalSpot = -1;
     }

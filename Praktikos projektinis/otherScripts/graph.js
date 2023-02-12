@@ -32,31 +32,17 @@ class Graph
     }
     findNearestIntervalExample(circlePos) 
     {
-        if (circlePos < 0) return ["-∞", -105 - currentGraph.offset];
-        else if (circlePos > currentGraph.pixels) return ["∞", 779 - currentGraph.offset];
+        if (circlePos < 0) return "-∞";
+        else if (circlePos > currentGraph.pixels) return "+∞";
         for (let i = 0; i < this.intervals.length; i++) 
         {
             if (circlePos < this.intervals[i][0]) 
             {
-                if (circlePos - this.intervals[i - 1][0] > (this.intervals[i][0] - this.intervals[i - 1][0]) / 2) return [this.intervals[i][1], this.intervals[i][0]];
-                else return [this.intervals[i - 1][1], this.intervals[i - 1][0]];
+                if (circlePos - this.intervals[i - 1][0] > (this.intervals[i][0] - this.intervals[i - 1][0]) / 2) return this.intervals[i][1];
+                else return this.intervals[i - 1][1];
             }
         }
-        return [this.intervals[this.intervals.length - 1][1], this.intervals[this.intervals.length - 1][0]];
-    }
-    findNearestIntervalLevel(circlePos, otherCirclePos, startCircle) 
-    {
-        if (startCircle && otherCirclePos == 0) return ["-∞", -105 - currentGraph.offset];
-        else if (!startCircle && otherCirclePos == currentGraph.pixels) return ["∞", 779 - currentGraph.offset];
-        for (let i = 0; i < this.intervals.length; i++) 
-        {
-            if (circlePos < this.intervals[i][0]) 
-            {
-                if (circlePos - this.intervals[i - 1][0] > (this.intervals[i][0] - this.intervals[i - 1][0]) / 2 && this.intervals[i][0] != otherCirclePos) return [this.intervals[i][1], this.intervals[i][0]];
-                else if (this.intervals[i - 1][0] != otherCirclePos) return [this.intervals[i - 1][1], this.intervals[i - 1][0]];
-            }
-        }
-        return [this.intervals[this.intervals.length - 1][1], this.intervals[this.intervals.length - 1][0]];
+        return this.intervals[this.intervals.length - 1][1];
     }
     configGraph() 
     {

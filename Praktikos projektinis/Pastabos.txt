@@ -1,0 +1,127 @@
+>>> Pastabos:
+
++ 1. Langelis kairėje viršuje "Gryžti į lygių pasirinkimą", "Grįžti" turi būti su į nosine, ne ilgąja.
+
++ 2. Rašant rezultatus intervale tarp kabliataškio ir antrojo skaičiaus turi būti tarpas: (6;_7)
+
++ 3. Pagal standartą, trupmeninę dalį atskiriame kableliu, ne tašku: (0,5; 0,7)
+
++ 4. Gal yra galimybė pavyzdiniame lygyje pridėti mygtuką, kuris leistų kelis kartus peržiūrėti tą patį pavyzdį, jei pirmu kartu yra neaišku.
+
++ 5. Pastebėjau, jei grafiko pradžios/pabaigos taškas yra ant x ašies, sunku matyti ar jis pilnaviduris ar tuščiaviduris. Ką galima dėl to padaryti? gal yra galimybė taip stipriai neryškinti x ašies, kaip yra dabar.
+
++ 10. Teigiama begalybė visada žymima su pliusu (+∞)
+
+
+
+? 4. Lygio užduotis gali būti pateikta kiekvienoje to lygio užduotyje.
+
+? 9. Jei yra galimybė, ties begalybe neturėtų būti rutuliukų, tik punktyrinė linija.
+
+? 12. 5 lygis. Užrašant atsakymą, gal galima apibraukti tą vietą, kur vaikas turi ieškoti funkcijos vardo, kad galėtų jį įrašyti į skliaustus?
+
+
+
+(+?) 11. Pateikti didesnį funkcijos vardo vaizdą, nes labai sunku įžiūrėti
+
+(+?) 17. Norėčiau 3 ir 9 lygiams ne tokios tamsios spalvos. Dėl spalvų tamsumo sudėtinga perskaityti tekstą.
+
+
+
+(+-) 6. Nuo 3 lygio. Veiksmų eilės tvarka: 1. Pritraukiama kairė intervalo pusė. 2. Nustatomas tinkamas rutuliukas kairėje. 3. Pritraukiama dešinė intervalo pusė. 	4. Užrašomas rezultatas. 
+
+(+-) 7. Tokia pat tvarka ir teikiant atsakymus lygiuose - pritraukiama po vieną pusę, kur reikalinga pakeičiant rutuliukus, tik po to užrašomas rezultatas.
+
+(+-) 13. 5 lygyje tegul būna du langeliai atsakymui užrašyti: D(LANGELIS)=LANGELIS. Vėlesniuose lygiuose, tegul lieka vienas langelis atsakymui užrašyti.
+
+(+-) 16. Jei yra galimybė 9 lygyje toje vietoje, kur yra papildomas rutuliukas, norėčiau vertikalios linijos.
+
+
+
+(+-?) 14. Jei yra galimybė 7 lygyje toje vietoje, kur viena grafiko dalis baigiasi, o kita prasideda, norėčiau kokios nors vertikalios linijos, kuri leistų tai aiškiai matyti.
+
+(+-?) 15. Jei yra galimybė 8 lygyje toje vietoje, kur viena grafiko dalis baigiasi, o kita prasideda, norėčiau kokios nors vertikalios linijos, kuri leistų tai aiškiai matyti.
+
+
+
+! 8. Ar yra galimybė mokiniui nurodyti, kurioje vietoje jo atsakymas yra klaidingas? Kadangi mokinys turi atliikti daug žingsnių, gal galima apibraukti tai, kur suklydo atlikdamas užduotį?
+
+
+
+>>> Užrašai šone, kurie lieka. Siūlau kiekviename lygyje įvesti po vieną/dvi naujas taisykles, kurios llieka šonė viso likusio žaidimo metu
+
+1 lygis:
+
+Apibrėžimo sritis - visos argumento (x) reikšmės, su kuriomis funkcija egzistuoja (galima nubrėžti jos grafiką).
+
+Apibrėžimo sritis žymima D(funkcijos vardas)=intervalas.
+
+2 lygis:
+
+Jei funkcijos grafikas prasideda/baigiasi užspalvintu rutuliuku, tai ir apibrėžimo sritis grafike prasidės/baigsis užspalvintu rutuliuku, o intervalo pradžioje/pabaigoje žymėsime laužtinius skliaustus.
+
+3 lygis:
+
+Jei funkcijos grafikas prasideda/baigiasi kiauru rutuliuku, tai ir apibrėžimo sritis grafike prasidės/baigsis kiauru rutuliuku, o intervalo pradžioje/pabaigoje žymėsime lenktus skliaustus.
+
+4 lygis:
+
+Jei funkcijos grafikas neturi pradžios/pabaigos, tai jos apibrėžimo sritis prasideda/pasibaigia begalybėje ir intervale yra žymima -∞/+∞. Begalybė visada rašoma su lenktais skliaustais.
+
+5 lygis:
+
+Kiekviena funkcija turi vardą. Funkcijos vadinamos mažosiomis abėcėlės raidėmis.
+
+6 lygis:
+
+Jei funkcijos grafikas prasideda/baigiasi lenkta linija, tai jos apibrėžimo sritis prasidės/baigsis užspalvintu rutuliuku, o intervalo pradžioje/pabaigoje žymėsime laužtinius skliaustus.
+
+7 lygis:
+
+Jei viena funkcijos grafiko dalis baigiasi užspalvintu rutuliuku, o kita funkcijos grafiko dalis toje pačioje vietoje prasideda užspalvintu rutuliuku, tai apibrėžimo sritį užrašome vienu intervalu be trūkių.
+
+8 lygis:
+
+Jei viena funkcijos grafiko dalis baigiasi užspalvintu/kiauru rutuliuku, o kita funkcijos grafiko dalis toje pačioje vietoje prasideda kiauru/užspalvintu rutuliuku, tai apibrėžimo sritį užrašome vienu intervalu be trūkių.
+
+9 lygis:
+
+Jei funkcijos grafikas sudarytas iš dviejų viena virš kitos einančių dalių ir vienoje iš tų dalių turime užspalvintą rutuliuką, tai apibrėžimo sritį užrašome vienu intervalu be trūkių.
+
+
+>>> Užduoties formulavimas ++++++++++++++++++++++++++
+1 lygis
+
+Remdamiesi grafiku, nustatykite pateiktos funkcijos apibrėžimo srities pradžios ir pabaigos skaitines reikšmes, įrašykite jas langelyje po grafiku.
+
+2 lygis
+
+Remdamiesi grafiku, nustatykite pateiktos funkcijos apibrėžimo srities pradžios ir pabaigos skaitines reikšmes, įrašykite jas langelyje po grafiku, nurodydami teisingus intervalo pradžios ir pabaigos sklaiustus.
+
+3 lygis
+
+Remdamiesi grafiku, nustatykite pateiktos funkcijos apibrėžimo sritį, pasirinkite teisingus pradžią ir pabaigą žyminčius rutuliukus ir rezultatą užrašykite, nurodydami teisingus intervalo pradžios ir pabaigos skliaustus.
+
+4 lygis 
+
+Remdamiesi grafiku, nustatykite pateiktos funkcijos apibrėžimo sritį, pasirinkdami jos pradžią ir pabaigą grafike ir užrašykite ją intervalu, nurodydami teisingus intervalo pradžios ir pabaigos skliaustus.
+
+5 lygis
+
+Remdamiesi grafiku, nustatykite pateiktos funkcijos apibrėžimo sritį, pasirinkdami jos pradžią ir pabaigą grafike ir užrašykite ją intervalu, nurodydami teisingus intervalo pradžios ir pabaigos skliaustus ir nurodydami funkcijos vardą.
+
+6 lygis
+
+Remdamiesi grafiku, nustatykite pateiktos funkcijos apibrėžimo sritį, pasirinkdami jos pradžią ir pabaigą grafike ir užrašykite ją intervalu, nurodydami teisingus intervalo pradžios ir pabaigos skliaustus ir nurodydami funkcijos vardą, kai funkijos grafikas prasideda/baigiasi lenkta linija.
+
+7 lygis
+
+Remdamiesi grafiku, nustatykite pateiktos funkcijos apibrėžimo sritį, pasirinkdami jos pradžią ir pabaigą grafike ir užrašykite ją intervalu, nurodydami teisingus intervalo pradžios ir pabaigos skliaustus ir nurodydami funkcijos vardą, kai funkcijos grafikas sudarytas iš kelių atskirų dalių.
+
+8 lygis
+
+Remdamiesi grafiku, nustatykite pateiktos funkcijos apibrėžimo sritį, pasirinkdami jos pradžią ir pabaigą grafike ir užrašykite ją intervalu, nurodydami teisingus intervalo pradžios ir pabaigos skliaustus ir nurodydami funkcijos vardą, kai funkcijos grafikas sudarytas iš kelių atskirų dalių.
+
+9 lygis
+
+Remdamiesi grafiku, nustatykite pateiktos funkcijos apibrėžimo sritį ir užrašykite ją intervalu.

@@ -1,4 +1,4 @@
-let INTERVALS = [];
+let intervals = [];
 window.onload = function()
 {
     let levelName = window.sessionStorage.getItem("lygis");
@@ -22,29 +22,29 @@ window.onload = function()
     {
         let interval = new Interval(i, currentGraph.start + i * currentGraph.intervalStep, currentGraph.pixels, currentGraph.intervalSize / currentGraph.intervalStep, "NONE");
         intervalContainer.appendChild(interval.element);
-        INTERVALS[i] = interval;
+        intervals[i] = interval;
     }
-    INTERVALS[0].open = false;
-    INTERVALS[INTERVALS.length - 1].open = false;
+    intervals[0].open = false;
+    intervals[intervals.length - 1].open = false;
     if (currentGraph.currentLevel >= 4)
     {
-        createInfinitePosition(-25.6 + "%", -119, "negative");
-        createInfinitePosition(121.6 + "%", 766, "positive");
+        createInfinitePosition(-25.6 + "%", "negative");
+        createInfinitePosition(121.6 + "%", "positive");
     }
     filledArea = document.getElementById("filledArea").getContext("2d");
     filledArea.fillStyle = "rgba(180, 180, 180, 0.4)";
     initializeNewGraph();
     setColor();
 }
-function createInfinitePosition(margin, position, whichInf)
+function createInfinitePosition(margin, whichInf)
 {
     let div = document.getElementById("infinitySpots");
-    let interval = new Interval(INTERVALS.length, INTERVALS.length, 0, 0, whichInf);
+    let interval = new Interval(intervals.length, intervals.length, 0, 0, whichInf);
     interval.element.classList.add("infinityInterval");
     div.appendChild(interval.element);
     interval.element.style.marginLeft = margin;
-    interval.position = position;
-    INTERVALS.push(interval);
+    interval.position = interval.element.offsetLeft + 24.8;
+    intervals.push(interval);
 }
 function circleDragSetupX(draggableCircle)
 {
@@ -68,7 +68,7 @@ function circleDragSetupX(draggableCircle)
             {
                 draggableCircle.circle.style.left = whichInterval[0] + 'px';
                 draggableCircle.line.style.left = whichInterval[0] + currentGraph.offset + 'px';
-                draggableCircle.label.innerText = whichInterval[1];
+                draggableCircle.intervalLabel.innerText = whichInterval[1];
                 updateLabelPos(draggableCircle);
             }
             drawFilledArea(circles[0].getBounds().left + 13, 16, circles[1].getBounds().left - circles[0].getBounds().left, 480);
@@ -81,62 +81,7 @@ function circleDragSetupX(draggableCircle)
     });
     draggableCircle.circle.ondragstart = function() { return false; };
 }
-/*function circleDragSetupX(draggableCircle, otherCircle, isStartCircle)
-{
-    let startEvent = 'mousedown';
-    let moveEvent = 'mousemove';
-    let endEvent = 'mouseup';
-    if ('ontouchstart' in window) 
-    {
-        startEvent = 'touchstart';
-        moveEvent = 'touchmove';
-        endEvent = 'touchend';
-    }
-    draggableCircle.circle.addEventListener(startEvent, function(event)
-    {
-        event.preventDefault();
-        let newPos, edge, shift;
-        if (startEvent == 'touchstart') shift = (window.innerWidth * (event.touches[0].clientX / window.innerWidth)) - draggableCircle.getBounds().left;
-        else shift = (window.innerWidth * (event.clientX / window.innerWidth)) - draggableCircle.getBounds().left;
-        document.addEventListener(moveEvent, onMouseMove);
-        document.addEventListener(endEvent, onMouseUp);
-        function onMouseMove(event)
-        {
-            if (startEvent == 'touchstart') newPos = (window.innerWidth * (event.touches[0].clientX / window.innerWidth)) - shift - axisX.getBoundingClientRect().left;
-            else newPos = (window.innerWidth * (event.clientX / window.innerWidth)) - shift - axisX.getBoundingClientRect().left;
-            edge = axisX.offsetWidth - draggableCircle.getOffsetWidth();
-            if (isStartCircle)
-            {
-                let otherCircleLeft = otherCircle.getBounds().left - axisX.getBoundingClientRect().left;
-                if (newPos > otherCircleLeft - draggableCircle.getOffsetWidth()) newPos = otherCircleLeft - draggableCircle.getOffsetWidth();
-            }
-            else
-            {
-                let otherCircleLeft = otherCircle.getBounds().right - axisX.getBoundingClientRect().left;
-                if (newPos < otherCircleLeft) newPos = otherCircleLeft;
-            }
-            if (currentGraph.currentLevel > 3)
-            {
-                if (newPos < -115) newPos = toInfinity(draggableCircle, "plotNegInf", "negInf");
-                else if (newPos > 760) newPos = toInfinity(draggableCircle, "plotPosInf", "posInf");
-                else newPos = setIntervalPosition(draggableCircle, otherCircle, newPos, isStartCircle, edge);
-            }
-            else newPos = setIntervalPosition(draggableCircle, otherCircle, newPos, isStartCircle, edge);
-            draggableCircle.circle.style.left = newPos + 'px';
-            if (isStartCircle) draggableCircle.line.style.left = newPos + currentGraph.offset + 'px';
-            else draggableCircle.line.style.left = newPos + currentGraph.offset + 'px';
-            updateLabelPos(draggableCircle);
-            drawFilledArea(intervals[0].getBounds().left + 15, 15, intervals[1].getBounds().left - intervals[0].getBounds().left - 5, 480);
-        }
-        function onMouseUp() 
-        {
-            document.removeEventListener(endEvent, onMouseUp);
-            document.removeEventListener(moveEvent, onMouseMove);
-        }
-    });
-    draggableCircle.circle.ondragstart = function() { return false; };
-}*/
-function circleDragSetupY(draggableCircle, otherCircle, startCircle)
+/*function circleDragSetupY(draggableCircle, otherCircle, startCircle)
 {
     draggableCircle.circle.onmousedown = function(event) 
     {
@@ -162,8 +107,8 @@ function circleDragSetupY(draggableCircle, otherCircle, startCircle)
             newPos = newPos < 0 ? 0 : newPos > edge ? edge : newPos;
             newPos = currentGraph.findNearestIntervalLevel(newPos, parseFloat(otherCircle.circle.style.top, 10), isStartCircle);
             draggableCircle.circle.style.top = draggableCircle.line.style.top = newPos + 'px';
-            draggableCircle.label.style.top = `${draggableCircle.circle.offsetTop + draggableCircle.circle.offsetHeight / 2 - draggableCircle.label.offsetHeight / 2}px`;
-            draggableCircle.label.style.left = `${draggableCircle.circle.offsetLeft - 20}px`;
+            draggableCircle.intervalLabel.style.top = `${draggableCircle.circle.offsetTop + draggableCircle.circle.offsetHeight / 2 - draggableCircle.label.offsetHeight / 2}px`;
+            draggableCircle.intervalLabel.style.left = `${draggableCircle.circle.offsetLeft - 20}px`;
             drawFilledArea(4, circles[0].getBounds().top, 774, circles[1].getBounds().top - circles[0].getBounds().top);
         }
         function onMouseUp()
@@ -173,52 +118,37 @@ function circleDragSetupY(draggableCircle, otherCircle, startCircle)
         }
     };
     draggableCircle.circle.ondragstart = function() { return false; };
-}
+}*/
 function setIntervalPosition(draggableCircle, newPos)
 {
-    for (let i = 0; i < INTERVALS.length; i++)
+    for (let i = 0; i < intervals.length; i++)
     {
-        if (INTERVALS[i].open)
+        if (intervals[i].open)
         {
-            const targetLeft = INTERVALS[i].element.getBoundingClientRect().left;
-            const targetRight = targetLeft + INTERVALS[i].element.getBoundingClientRect().width;
+            const targetLeft = intervals[i].element.getBoundingClientRect().left;
+            const targetRight = targetLeft + intervals[i].element.getBoundingClientRect().width;
             if (newPos >= targetLeft && newPos <= targetRight) 
             {
-                if (draggableCircle.intervalSpot != -1) INTERVALS[draggableCircle.intervalSpot].open = true;
+                if (draggableCircle.intervalSpot != -1) intervals[draggableCircle.intervalSpot].open = true;
                 draggableCircle.intervalSpot = i;
-                INTERVALS[i].open = false;
-                let intervalNumber = INTERVALS[i].labelValue / currentGraph.trueNumber;
-                let labelNumber = INTERVALS[i].whichInf != "NONE" ? whichInfinity(draggableCircle, INTERVALS[i].whichInf) : intervalNumber;
-                if (INTERVALS[INTERVALS.length - 2].open) document.getElementById("plotNegInf").style.display = "none";
-                if (INTERVALS[INTERVALS.length - 1].open) document.getElementById("plotPosInf").style.display = "none";
-                return [INTERVALS[i].position, labelNumber];
+                intervals[i].open = false;
+                let intervalNumber = intervals[i].labelValue / currentGraph.trueNumber;
+                let labelNumber = intervals[i].whichInf != "NONE" ? whichInfinity(draggableCircle, intervals[i].whichInf) : intervalNumber.toLocaleString('de-DE');
+                circleToInfPos(intervals.length - 2, "negInf", "plotNegInf");
+                circleToInfPos(intervals.length - 1, "posInf", "plotPosInf");
+                return [intervals[i].position, labelNumber];
             }
         }
     }
     return "NONE";
-  //  let interval = currentGraph.findNearestIntervalLevel(newPos, parseFloat(otherCircle.circle.style.left, 10), isStartCircle);
- //   newPos = interval[1];
-  //  draggableCircle.label.innerText = interval[0] == "-∞" || interval[0] == "∞" ? interval[0] : interval[0] / currentGraph.trueNumber;
-   // if (interval[0] != "-∞") document.getElementById("plotNegInf").style.display = "none";
-   // else if (interval[0] != "∞") document.getElementById("plotPosInf").style.display = "none";
 }
-/*function setIntervalPosition(draggableCircle, otherCircle, newPos, isStartCircle, edge)
-{
-    newPos = newPos < 0 ? 0 : newPos > edge ? edge : newPos;
-    let interval = currentGraph.findNearestIntervalLevel(newPos, parseFloat(otherCircle.circle.style.left, 10), isStartCircle);
-    newPos = interval[1];
-    draggableCircle.label.innerText = interval[0] == "-∞" || interval[0] == "∞" ? interval[0] : interval[0] / currentGraph.trueNumber;
-    if (isStartCircle && interval[0] != "-∞") document.getElementById("plotNegInf").style.display = "none";
-    else if (interval[0] != "∞") document.getElementById("plotPosInf").style.display = "none";
-    return newPos;
-}*/
 function whichInfinity(draggableCircle, whichInf)
 {
     if (whichInf == "positive")
     {
         draggableCircle.switchType("white", "5px dashed");
         document.getElementById("plotPosInf").style.display = "block";
-        return "∞";
+        return "+∞";
     }
     else
     {
@@ -226,6 +156,15 @@ function whichInfinity(draggableCircle, whichInf)
         document.getElementById("plotNegInf").style.display = "block";
         return "-∞";
     }
+}
+function circleToInfPos(which, infId, plotInfId)
+{
+    if (intervals[which].open)
+    {
+        document.getElementById(infId).style.visibility = "visible";
+        document.getElementById(plotInfId).style.display = "none";
+    }
+    else document.getElementById(infId).style.visibility = "hidden";
 }
 function changeCircleType(index)
 {
@@ -242,20 +181,22 @@ function drawFilledArea(x, y, width, height)
 }
 function updateLabelPos(draggableCircle)
 {
-    draggableCircle.label.style.top = `${draggableCircle.circle.offsetTop - 50}px`;
-    draggableCircle.label.style.left = `${draggableCircle.circle.offsetLeft + draggableCircle.circle.offsetWidth / 2 - draggableCircle.label.offsetWidth / 2}px`;
+    draggableCircle.intervalLabel.style.top = `${draggableCircle.circle.offsetTop - 50}px`;
+    draggableCircle.intervalLabel.style.left = `${draggableCircle.circle.offsetLeft + draggableCircle.circle.offsetWidth / 2 - draggableCircle.intervalLabel.offsetWidth / 2}px`;
+    draggableCircle.circleLabel.style.top = `${draggableCircle.circle.offsetTop - 27}px`;
+    draggableCircle.circleLabel.style.left = `${draggableCircle.circle.offsetLeft + draggableCircle.circle.offsetWidth / 2 - draggableCircle.circleLabel.offsetWidth / 2}px`;
 }
 function initializeNewGraph()
 {
     generateAxis("axisX", "startCircleX", "endCircleX", "startLineX", "endLineX", "lineX", "X", currentGraph.pixels + "px", false);
     circles = 
     [
-        new Circle(axisX.querySelector('#startCircleX'), overlay.querySelector('#startLineX'), "right", overlay.querySelector("#startCircleLabel"), currentGraph.start),
-        new Circle(axisX.querySelector('#endCircleX'), overlay.querySelector('#endLineX'), "left", overlay.querySelector("#endCircleLabel"), currentGraph.end)
+        new Circle(axisX.querySelector('#startCircleX'), overlay.querySelector('#startLineX'), "right", overlay.querySelector("#intervalLabel1"), currentGraph.start, overlay.querySelector("#circleLabel1")),
+        new Circle(axisX.querySelector('#endCircleX'), overlay.querySelector('#endLineX'), "left", overlay.querySelector("#intervalLabel2"), currentGraph.end, overlay.querySelector("#circleLabel2"))
     ];
     circles[0].intervalSpot = 0;
-    if (currentGraph.currentLevel >= 4) circles[1].intervalSpot = INTERVALS.length - 3;
-    else circles[1].intervalSpot = INTERVALS.length - 1;
+    if (currentGraph.currentLevel >= 4) circles[1].intervalSpot = intervals.length - 3;
+    else circles[1].intervalSpot = intervals.length - 1;
     currentGraph.setGraph();
     for (const interval of circles) updateLabelPos(interval);
     circleDragSetupX(circles[0]);
@@ -269,25 +210,38 @@ function clearTheLevel()
 }
 function checkIfCorrect()
 {
-    if (circles[0].label.innerText == currentGraph.intervalAnswers[0] && circles[1].label.innerText == currentGraph.intervalAnswers[1]) 
+    let answers = currentGraph.intervalAnswers.slice();
+    let brackets = [];
+    for (let i = 0; i < circles.length; i++)
     {
-        let input = document.getElementById("apibrezimoSritis").value.replace(/\s/g, "");
+        for (let j = 0; j < answers.length; j++)
+        {
+            if (circles[i].intervalLabel.innerText == answers[j].toLocaleString("de-DE"))
+            {
+                answers.splice(j, 1);
+                if (i % 2 == 0) brackets[i] = circles[j].getBackgroundColor() == "white" ? "(" : "[";
+                else brackets[i] = circles[j].getBackgroundColor() == "white" ? ")" : "]";
+                break;
+            }
+        }
+    }
+    if (answers.length > 0) levelFailed();
+    else
+    {
+        let input = document.getElementById("apibrezimoSritis").value;
         if (currentGraph.currentLevel > 1)
         {
-            let firstBracket = circles[0].getBackgroundColor() == "white" ? "(" : "[";
-            let secondBracket = circles[1].getBackgroundColor() == "white" ? ")" : "]";
             if (currentGraph.currentLevel > 4 && input.includes("="))
             {
-                if (firstBracket == input.split("=")[1][0] && secondBracket == input.slice(-1)[0] && currentGraph.inputAnswer == input) levelCompleted();
+                if (brackets[0] == input.split("=")[1][0] && brackets[1] == input.slice(-1)[0] && currentGraph.inputAnswer == input) levelCompleted();
                 else levelFailed();
             }
-            else if (firstBracket == input[0] && secondBracket == input.slice(-1)[0] && currentGraph.inputAnswer == input) levelCompleted();
+            else if (brackets[0] == input[0] && brackets[1] == input.slice(-1)[0] && currentGraph.inputAnswer == input) levelCompleted();
             else levelFailed();
         }
         else if (currentGraph.inputAnswer == input) levelCompleted();
         else levelFailed();
     }
-    else levelFailed();
 }
 function nextLevel()
 {
@@ -330,16 +284,9 @@ function levelFailed()
 }
 function writeInfSymbol(isPositive)
 {
-    document.getElementById("apibrezimoSritis").value += isPositive ? "∞" : "-∞";
+    document.getElementById("apibrezimoSritis").value += isPositive ? "+∞" : "-∞";
 }
 function goBack()
 {
     window.location.href = "../startPageCode/startPage.html";
-}
-function toInfinity(draggableCircle, whichInfPlotId, whichInfId)
-{
-    draggableCircle.switchType("white", "5px dashed");
-    document.getElementById(whichInfPlotId).style.display = "block";
-    draggableCircle.label.innerText = whichInfId == "negInf" ? "-∞" : "∞";
-    return document.getElementById(whichInfId).offsetLeft - currentGraph.offset;
 }

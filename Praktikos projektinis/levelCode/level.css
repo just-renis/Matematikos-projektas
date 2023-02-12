@@ -28,7 +28,7 @@
 {
     background: black;
     width: 100%;
-    height: 5px;
+    height: 0px;
 }
 #axisY
 {
@@ -128,6 +128,11 @@ p
     user-select: none;
     pointer-events: none;
 }
+#circleLabel1, #circleLabel2
+{
+    color: rgb(0, 200, 0);
+    z-index: 8;
+}
 h1
 {
     text-align: center;
@@ -202,9 +207,8 @@ button
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: black;
-    border: solid black 3px;
-    background-color: red;
+    background: transparent;
+    border: solid transparent 3px;
 }
 #infinitySpots
 {
