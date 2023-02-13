@@ -19,7 +19,7 @@ function disableNotNeededElements()
             document.getElementById("posInfButton").style.visibility = "visible";
         }
     }
-    if (currentGraph.currentLevel < 4)
+    else if (currentGraph.currentLevel < 4)
     {
         let button = document.getElementById("negInfButton");
         if (button) // If it is real level or example level.
@@ -30,8 +30,19 @@ function disableNotNeededElements()
         }
         document.getElementById("negInf").style.display = "none";
         document.getElementById("posInf").style.display = "none";
+        document.getElementById("functionNameInput").style.visibility = "hidden";
+        
     }
-    if (currentGraph.currentLevel > 4) document.getElementById("apSritisLabel").style.display = "none";
+    if (currentGraph.currentLevel == 5)
+    {
+        document.getElementById("apSritisLabel").innerText = "D(";
+    }
+    else 
+    {
+        if (currentGraph.currentLevel > 4) document.getElementById("apSritisLabel").style.display = "none";
+        document.getElementById("apSritisSecondLabel").style.display = "none";
+        document.getElementById("functionNameInput").style.display = "none";
+    }
 }
 function generateAxis(axisId, startCircleId, endCircleId, startLineId, endLineId, lineClassName, whichAxis, endCirclePos, isExample)
 {
@@ -49,15 +60,25 @@ function generateAxis(axisId, startCircleId, endCircleId, startLineId, endLineId
     let posInf = setElement("div", "posInf", "circle");
     posInf.style.zIndex = 2;
     let apSritisLabel = setElement("label", "apSritisLabel");
+    let apSritisSecondLabel = setElement("label", "apSritisSecondLabel");
     let apSritisBracket1 = setElement("label", "apSritisBracket1");
     let apSritisBracket2 = setElement("label", "apSritisBracket2");
     apSritisLabel.innerText = "D(f)=";
+    apSritisSecondLabel.innerText = ")=";
     apSritisBracket1.innerText = "[";
     apSritisBracket2.innerText = "]";
     let input = setElement("input", "apibrezimoSritis");
-    input.type = "text";
-    input.maxlength = "20";
-    if (isExample) input.setAttribute("readonly", true);
+    let functionNameInput = setElement("input", "functionNameInput");
+    input.style.type = "text";
+    input.maxLength = "20";
+    functionNameInput.style.type = "text";
+    functionNameInput.maxLength = "1";
+    functionNameInput.style.width = "10px";
+    if (isExample) 
+    {
+        input.setAttribute("readonly", true);
+        functionNameInput.setAttribute("readonly", true);
+    }
     if (whichAxis == "X")
     {
         startCircle.style.left = '0px';
@@ -71,7 +92,7 @@ function generateAxis(axisId, startCircleId, endCircleId, startLineId, endLineId
     appendChilds(axis, [startCircle, endCircle]);
     appendChilds(overlay, [axis, startLine, endLine]);
     appendChilds(container, [negInf, posInf, plotNegInf, plotPosInf]);
-    appendChilds(document.getElementById("apibrezimoSritiesContainer"), [apSritisLabel, apSritisBracket1, input, apSritisBracket2]);
+    appendChilds(document.getElementById("apibrezimoSritiesContainer"), [apSritisLabel, functionNameInput, apSritisSecondLabel, apSritisBracket1, input, apSritisBracket2]);
     disableNotNeededElements();
 }
 function setElement(whichElement, id, className)

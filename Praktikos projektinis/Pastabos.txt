@@ -12,6 +12,8 @@
 
 + 10. Teigiama begalybė visada žymima su pliusu (+∞)
 
++ 13. 5 lygyje tegul būna du langeliai atsakymui užrašyti: D(LANGELIS)=LANGELIS. Vėlesniuose lygiuose, tegul lieka vienas langelis atsakymui užrašyti.
+
 
 
 ? 4. Lygio užduotis gali būti pateikta kiekvienoje to lygio užduotyje.
@@ -28,15 +30,13 @@
 
 
 
-(+-) 6. Nuo 3 lygio. Veiksmų eilės tvarka: 1. Pritraukiama kairė intervalo pusė. 2. Nustatomas tinkamas rutuliukas kairėje. 3. Pritraukiama dešinė intervalo pusė. 	4. Užrašomas rezultatas. 
-
-(+-) 7. Tokia pat tvarka ir teikiant atsakymus lygiuose - pritraukiama po vieną pusę, kur reikalinga pakeičiant rutuliukus, tik po to užrašomas rezultatas.
-
-(+-) 13. 5 lygyje tegul būna du langeliai atsakymui užrašyti: D(LANGELIS)=LANGELIS. Vėlesniuose lygiuose, tegul lieka vienas langelis atsakymui užrašyti.
-
 (+-) 16. Jei yra galimybė 9 lygyje toje vietoje, kur yra papildomas rutuliukas, norėčiau vertikalios linijos.
 
 
+
+(+-?) 6. Nuo 3 lygio. Veiksmų eilės tvarka: 1. Pritraukiama kairė intervalo pusė. 2. Nustatomas tinkamas rutuliukas kairėje. 3. Pritraukiama dešinė intervalo pusė. 	4. Užrašomas rezultatas. 
+
+(+-?) 7. Tokia pat tvarka ir teikiant atsakymus lygiuose - pritraukiama po vieną pusę, kur reikalinga pakeičiant rutuliukus, tik po to užrašomas rezultatas.
 
 (+-?) 14. Jei yra galimybė 7 lygyje toje vietoje, kur viena grafiko dalis baigiasi, o kita prasideda, norėčiau kokios nors vertikalios linijos, kuri leistų tai aiškiai matyti.
 

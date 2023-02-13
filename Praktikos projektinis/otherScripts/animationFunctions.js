@@ -69,10 +69,12 @@ function animateInterval(index, milliseconds, endPoint, onEndRun, onEndRunPoint)
 }
 function animateInput(text, inputField) 
 {
-    let i = 0;
+    let functionNameNeeded = currentGraph.currentLevel == 5 ? 1 : 0;
+    if (currentGraph.currentLevel == 5) document.getElementById("functionNameInput").value = text[0];
+    let i = functionNameNeeded;
     let intervalId = setInterval(function() 
     {
-        inputField.value = text.substring(0, i++);
+        inputField.value = text.substring(functionNameNeeded, i++);
         if (i > text.length) 
         {
             clearInterval(intervalId);
@@ -90,7 +92,11 @@ function showClickedButton()
     if (currentGraph.inputAnswer.includes("=")) needButton1 = currentGraph.inputAnswer.split("=")[1][0] == "(" && currentGraph.inputAnswer.split("=")[1][2] != "∞";
     else needButton1 = currentGraph.inputAnswer[0] == "(" && currentGraph.inputAnswer[2] != "∞";
     needButton2 = currentGraph.inputAnswer.slice(-1)[0] == ")" && currentGraph.inputAnswer.split(";")[1][2] != "∞";
-    if (!needButton1 && !needButton2) enableButtons();
+    if (!needButton1 && !needButton2) 
+    {
+        enableButtons();
+        return;
+    }
     let intervalId = setInterval(function()
     {
         const elapsedTime =  Date.now() - startTime;

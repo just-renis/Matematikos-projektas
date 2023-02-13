@@ -231,11 +231,12 @@ function checkIfCorrect()
         let input = document.getElementById("apibrezimoSritis").value;
         if (currentGraph.currentLevel > 1)
         {
-            if (currentGraph.currentLevel > 4 && input.includes("="))
+            if (currentGraph.currentLevel > 5 && input.includes("="))
             {
                 if (brackets[0] == input.split("=")[1][0] && brackets[1] == input.slice(-1)[0] && currentGraph.inputAnswer == input) levelCompleted();
                 else levelFailed();
             }
+            else if (currentGraph.currentLevel == 5 && document.getElementById("functionNameInput").value == currentGraph.inputAnswer[0] && brackets[0] == input[0] && brackets[1] == input.slice(-1)[0] && currentGraph.inputAnswer.slice(1) == input) levelCompleted();
             else if (brackets[0] == input[0] && brackets[1] == input.slice(-1)[0] && currentGraph.inputAnswer == input) levelCompleted();
             else levelFailed();
         }
