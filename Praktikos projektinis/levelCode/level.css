@@ -42,7 +42,7 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    position: relative;
+    position: absolute;
     background: black;
     border: solid black 3px;
     cursor: pointer;
@@ -137,39 +137,6 @@ h1
 {
     text-align: center;
 }
-#negInf
-{
-    background: white;
-    top: 39.8%;
-    left: -15%;
-}
-#posInf
-{
-    background: white;
-    position: absolute;
-    top: 39.8%;
-    right: -15%;
-}
-#plotNegInf
-{
-    position: absolute;
-    background-color: rgba(180, 180, 180, 0.4);
-    width: 12.5%;
-    height: 96%;
-    left: -13.1%;
-    top: 3.1%;
-    display: none;
-}
-#plotPosInf
-{
-    position: absolute;
-    background-color: rgba(180, 180, 180, 0.4);
-    width: 12.5%;
-    height: 96%;
-    right: -13.1%;
-    top: 3.1%;
-    display: none;
-}
 button
 {
     margin-top: 15px;
@@ -179,7 +146,7 @@ button
     font-weight: bold;
     border: 3px solid rgb(0, 200, 100);
 }
-#showAnswerButton, #changeStartX, #changeEndX, #negInfButton, #posInfButton
+#showAnswerButton, #changeCircleButton, #negInfButton, #posInfButton
 {
     visibility: hidden;
 }
@@ -206,9 +173,10 @@ button
 {
     width: 20px;
     height: 20px;
+    margin-top: 310px;
     border-radius: 50%;
-    background: transparent;
-    border: solid transparent 3px;
+    background: red;
+    border: solid black 3px;
 }
 #infinitySpots
 {

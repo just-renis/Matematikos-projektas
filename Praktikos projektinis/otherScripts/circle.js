@@ -1,21 +1,31 @@
 class Circle
 {
     static circleAmount = 1;
-    constructor(circle, line, lineBorder, intervalLabel, currentNumber, circleLabel)
+    constructor(circle, line, lineBorder, intervalLabel, currentNumber, circleLabel, positionLeft)
     {
         this.circle = circle;
         this.line = line;
         this.lineBorder = lineBorder;
         this.intervalLabel = intervalLabel;
         this.circleLabel = circleLabel;
+        this.index = Circle.circleAmount - 1;
         this.circleLabel.innerText = Circle.circleAmount++;
-        this.intervalLabel.innerText = (currentNumber / currentGraph.trueNumber).toLocaleString('de-DE');
-        this.circle.style.backgroundColor = "black";
+        if (currentGraph.currentLevel >= 4) 
+        {
+            this.switchType("white", "5px dashed");
+            this.intervalLabel.innerText = circleLabel.id == "circleLabel1" ? "-∞" : "+∞";
+        }
+        else
+        {
+            this.intervalLabel.innerText = (currentNumber / currentGraph.trueNumber).toLocaleString('de-DE');
+            this.circle.style.backgroundColor = "black";
+        }
+        this.circle.style.left = positionLeft + "px";
+        this.line.style.left = positionLeft + "px";
+        this.circle.style.top = currentGraph.axisConfig[0];
         this.intervalSpot = -1;
     }
     getBounds() { return this.circle.getBoundingClientRect(); }
-    getOffsetWidth() { return this.circle.offsetWidth; }
-    getOffsetHeight() { return this.circle.offsetHeight; }
     getBackgroundColor() { return this.circle.style.backgroundColor; }
     switchType(color, change)
     {

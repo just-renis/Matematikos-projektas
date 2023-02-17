@@ -27,54 +27,43 @@ window.onload = function()
     setColor();
     initAnimations(graphAnimation);
 }
-function initAnimations(graphAnimation)
+async function initAnimations(graphAnimation)
 {
-    let isInfinity1, isInfinity2;
-    if (currentGraph.inputAnswer.includes("=") && currentGraph.inputAnswer.split("=")[1][2] == "∞") isInfinity1 = false;
-    else isInfinity1 = currentGraph.inputAnswer[2] != "∞";
-    isInfinity2 = currentGraph.inputAnswer.split(";")[1][2] != "∞";
-    if (isInfinity1 && !isInfinity2) animateInterval(0, 2000, graphAnimation[0], 1, graphAnimation[1]);
-    else if (!isInfinity1 && isInfinity2) animateInterval(1, 2000, graphAnimation[1], 0, graphAnimation[0]);
-    else
-    {
-        let milliseconds = 2000;
-        if (!isInfinity1 && !isInfinity2) milliseconds = 1000;
-        for (let i = 0; i < circles.length; i++) animateInterval(i, milliseconds, graphAnimation[i], -1, i);
-    }
+    for (let i = 0; i < circles.length; i++) await animateInterval(i, graphAnimation[i]);
+    animateInput(currentGraph.inputAnswer, document.getElementById("apibrezimoSritis"));
 }
 function generateIntervals()
 {
     let intervalContainer = document.getElementById("intervalContainer");
-    for (let i = 0; i <= currentGraph.intervalSize / currentGraph.intervalStep; i++) 
+    let needInfinities = currentGraph.currentLevel >= 4;
+    let intervalAmount = needInfinities ? currentGraph.intervalSize / currentGraph.intervalStep + 2 : currentGraph.intervalSize / currentGraph.intervalStep;
+    let labelValue = 0;
+    for (let i = 0; i <= intervalAmount; i++) 
     {
-        let interval = new Interval(i, currentGraph.start + i * currentGraph.intervalStep, currentGraph.pixels, currentGraph.intervalSize / currentGraph.intervalStep, "NONE");
+        if (needInfinities)
+        {
+            if (i == 0) labelValue = "-∞";
+            else if (i == intervalAmount) labelValue = "+∞";
+            else labelValue = currentGraph.start + (i - 1) * currentGraph.intervalStep;
+        }
+        else labelValue = currentGraph.start + i * currentGraph.intervalStep;
+        let interval = new Interval(labelValue);
         intervalContainer.appendChild(interval.element);
         intervals[i] = interval;
-    }
-    if (currentGraph.currentLevel >= 4)
-    {
-        createInfinitePosition(-25.6 + "%", "negative");
-        createInfinitePosition(121.6 + "%", "positive");
+        intervals[i].position = (intervals[i].element.getBoundingClientRect().left + parseFloat(currentGraph.axisConfig[2]) * i - (document.getElementById("container").getBoundingClientRect().left) - 4.8 + parseFloat(currentGraph.axisConfig[1]) + parseFloat(currentGraph.axisConfig[2]));
     }
 }
-function createInfinitePosition(margin, whichInf)
+function changeSelectedCircleType()
 {
-    let div = document.getElementById("infinitySpots");
-    let interval = new Interval(intervals.length, intervals.length, 0, 0, whichInf);
-    interval.element.classList.add("infinityInterval");
-    div.appendChild(interval.element);
-    interval.element.style.marginLeft = margin;
-    interval.position = interval.element.offsetLeft + 24.8;
-    intervals.push(interval);
-}
-function circleToInfPos(which, infId, plotInfId)
-{
-    if (intervals[which].open)
+    for (let i = 0; i < circles.length; i++)
     {
-        document.getElementById(infId).style.visibility = "visible";
-        document.getElementById(plotInfId).style.display = "none";
+        if (circles[i].circle.style.borderColor == "rgb(0, 216, 230)")
+        {
+            if (circles[i].circle.style.backgroundColor == "white") circles[i].switchType("black", "5px solid");
+            else circles[i].switchType("white", "5px dashed");
+            return;
+        }
     }
-    else document.getElementById(infId).style.visibility = "hidden";
 }
 function changeCircleType(index)
 {
@@ -98,14 +87,14 @@ function updateLabelPos(draggableCircle)
 }
 function initializeNewGraph()
 {
-    generateAxis("axisX", "startCircleX", "endCircleX", "startLineX", "endLineX", "lineX", "X", currentGraph.pixels + "px", true);
+    generateAxis("axisX", "startCircleX", "endCircleX", "startLineX", "endLineX", "lineX", true);
     circles = 
     [
-        new Circle(axisX.querySelector('#startCircleX'), overlay.querySelector('#startLineX'), "right", overlay.querySelector("#intervalLabel1"), currentGraph.start, overlay.querySelector("#circleLabel1")), 
-        new Circle(axisX.querySelector('#endCircleX'), overlay.querySelector('#endLineX'), "left", overlay.querySelector("#intervalLabel2"), currentGraph.end, overlay.querySelector("#circleLabel2"))
+        new Circle(axisX.querySelector('#startCircleX'), overlay.querySelector('#startLineX'), "right", overlay.querySelector("#intervalLabel1"), currentGraph.start, overlay.querySelector("#circleLabel1"), intervals[0].position), 
+        new Circle(axisX.querySelector('#endCircleX'), overlay.querySelector('#endLineX'), "left", overlay.querySelector("#intervalLabel2"), currentGraph.end, overlay.querySelector("#circleLabel2"), intervals[intervals.length - 1].position)
     ];
     currentGraph.setGraph();
-    for (const interval of circles) updateLabelPos(interval);
+    for (const circle of circles) updateLabelPos(circle);
     drawFilledArea(circles[0].getBounds().left + 13, 15, circles[1].getBounds().left - circles[0].getBounds().left, 480);
     if (currentGraph.graphName.split(".")[1][0] == "0") document.getElementById("explanation").innerText = explanations[currentGraph.currentLevel - 1];
 }
@@ -135,21 +124,6 @@ function nextLevel()
             if (graphs[Graph.graphNumber].graphName.split(".")[1][0] != "0") window.location.href = "../levelCode/level.html";
             else window.location.href = "../exampleLevelCode/exampleLevel.html";
     }
-}
-function updateIntervalPos(index, posX)
-{
-    circles[index].circle.style.transform = `translateX(${posX}px)`;
-    circles[index].line.style.transform = `translateX(${posX}px)`;
-    circles[index].intervalLabel.style.transform = `translateX(${posX}px)`;
-    circles[index].circleLabel.style.transform = `translateX(${posX}px)`;
-    let labelValue = currentGraph.findNearestIntervalExample(parseFloat(circles[index].circle.getBoundingClientRect().left - axisX.getBoundingClientRect().left, 10));
-    circles[index].intervalLabel.innerText = labelValue == "-∞" || labelValue == "+∞" ? labelValue : (labelValue / currentGraph.trueNumber).toLocaleString('de-DE');
-    updateLabelPos(circles[index]);
-    drawFilledArea(circles[0].getBounds().left + 13, 15, circles[1].getBounds().left - circles[0].getBounds().left, 480);
-}
-function enableInfPlot(plotId)
-{
-    document.getElementById(plotId).style.display = "block";
 }
 function goBack()
 {

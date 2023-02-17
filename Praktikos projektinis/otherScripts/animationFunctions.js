@@ -1,6 +1,6 @@
 let intervalAnimations =
 [
-    [6, 5], // 1.0
+    [6, 16], // 1.0
     [9, 11], // 1.1
     [3, 6], // 1.2
     [5, 6], // 2.0
@@ -9,11 +9,11 @@ let intervalAnimations =
     [6, 8], // 3.0
     [3, 5], // 3.1
     [3, 8], // 3.2
-    [20, 8], // 4.0.1
+    [0, 12], // 4.0.1
     [9, 23], // 4.0.2
     [20, 8], // 4.1
     [29, 30], // 4.2
-    [7, 3], // 5.0
+    [8, 16], // 5.0
     [23, 6], // 5.1
     [3, 4], // 5.2
     [6, 6], // 6.0
@@ -30,9 +30,11 @@ let intervalAnimations =
     [5, 7], // 9.1
     [4, 5] // 9.2
 ];
-function animateInterval(index, milliseconds, endPoint, onEndRun, onEndRunPoint)
+function animateInterval(index, endPoint) 
 {
-    if (currentGraph.inputAnswer.includes("=") && currentGraph.inputAnswer.split("=")[1][2] == "∞") circles[0].switchType("white", "5px dashed");
+    return new Promise(resolve => { moveToPosition(circles[index], intervals[endPoint], resolve); });
+}
+ /*   if (currentGraph.inputAnswer.includes("=") && currentGraph.inputAnswer.split("=")[1][2] == "∞") circles[0].switchType("white", "5px dashed");
     else if (currentGraph.inputAnswer[2] == "∞") circles[0].switchType("white", "5px dashed");
     if (currentGraph.inputAnswer.split(";")[1][2] == "∞") circles[1].switchType("white", "5px dashed");
     let startTime = Date.now();
@@ -53,21 +55,42 @@ function animateInterval(index, milliseconds, endPoint, onEndRun, onEndRunPoint)
         }
         if (elapsedTime >= milliseconds)
         {
-            if (parseInt(circles[index].circle.getBoundingClientRect().left - axisX.getBoundingClientRect().left, 10) < 0) enableInfPlot("plotNegInf");
-            else if (parseInt(circles[index].circle.getBoundingClientRect().left - axisX.getBoundingClientRect().left, 10) > currentGraph.pixels) enableInfPlot("plotPosInf");
             clearInterval(intervalId);
             if (++currentGraph.finishedAnimations == currentGraph.finishedAnimLimit) enableButtons();
             else if (currentGraph.finishedAnimations == 2) animateInput(currentGraph.inputAnswer, document.getElementById("apibrezimoSritis"));
             if (onEndRun != -1) animateInterval(onEndRun, milliseconds / 2, onEndRunPoint, -1, 0);
-            if (currentGraph.currentLevel >= 4)
-            {
-                circleToInfPos(intervals.length - 2, "negInf", "plotNegInf");
-                circleToInfPos(intervals.length - 1, "posInf", "plotPosInf");
-            }
         }
-    });
+    });*/
+async function moveToPosition(circleElement, target, resolve) 
+{
+    let startPosition = circleElement.circle.offsetLeft;
+    let targetPosition = target.position;
+    let distance = targetPosition - startPosition;
+    let startTime = Date.now();
+    function step()
+    {
+        let progress = (Date.now() - startTime) / 1500;
+        if (progress >= 1)
+        {
+            changePosition(circleElement, targetPosition, target.labelValue);
+            currentGraph.finishedAnimations++;
+            showClickedButton(circles[0], "left").then(() => { resolve(); });
+            return;
+        }
+        changePosition(circleElement, startPosition + distance * progress, Interval.findNearestIntervalLabel(circleElement.circle.style.left));
+        requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
 }
-function animateInput(text, inputField) 
+function changePosition(circleElement, newPosition, labelValue)
+{
+    circleElement.circle.style.left = newPosition + "px";
+    circleElement.line.style.left = newPosition + "px";
+    circleElement.intervalLabel.innerText = labelValue;
+    updateLabelPos(circleElement);
+    drawFilledArea(circles[0].getBounds().left + 13, 15, circles[1].getBounds().left - circles[0].getBounds().left, 480);
+}
+function animateInput(text, inputField)
 {
     let functionNameNeeded = currentGraph.currentLevel == 5 ? 1 : 0;
     if (currentGraph.currentLevel == 5) document.getElementById("functionNameInput").value = text[0];
@@ -78,18 +101,47 @@ function animateInput(text, inputField)
         if (i > text.length) 
         {
             clearInterval(intervalId);
-            if (++currentGraph.finishedAnimations == currentGraph.finishedAnimLimit) enableButtons();
-            else showClickedButton();
+            enableButtons();
         }
     }, 250);
 }
-function showClickedButton()
+function showClickedButton(circleElement, whichSide)
 {
-    let button1 = document.getElementById("changeStartX").style;
-    let button2 = document.getElementById("changeEndX").style;
-    let startTime = Date.now();
-    let needButton1, needButton2;
-    if (currentGraph.inputAnswer.includes("=")) needButton1 = currentGraph.inputAnswer.split("=")[1][0] == "(" && currentGraph.inputAnswer.split("=")[1][2] != "∞";
+    return new Promise(resolve => 
+    {
+        let button = document.getElementById("changeCircleButton").style;
+        let bracket;
+        let startTime = Date.now();
+        if (circleElement.circle.style.backgroundColor == "black") bracket = whichSide == "left" ? "[" : "]";
+        else bracket = whichSide == "left" ? "(" : ")";
+        let bracketAnswers = "";
+        for (let i = 0; i < currentGraph.inputAnswer.length; i++)
+        {
+            switch (currentGraph.inputAnswer[i])
+            {
+                case "(": bracketAnswers += "("; break;
+                case ")": bracketAnswers += ")"; break;
+                case "[": bracketAnswers += "["; break;
+                case "]": bracketAnswers += "]"; break;
+            }
+        }
+        if (bracket != bracketAnswers[circleElement.index])
+        {
+            let intervalId = setInterval(function()
+            {
+                const elapsedTime = Date.now() - startTime;
+                enableBlink(button, elapsedTime);
+                if (elapsedTime >= 2000)
+                {
+                    changeCircleType(circleElement.index);
+                    clearInterval(intervalId);
+                    resolve();
+                }
+            });
+        }
+        else resolve();
+    });
+   /* if (currentGraph.inputAnswer.includes("=")) needButton1 = currentGraph.inputAnswer.split("=")[1][0] == "(" && currentGraph.inputAnswer.split("=")[1][2] != "∞";
     else needButton1 = currentGraph.inputAnswer[0] == "(" && currentGraph.inputAnswer[2] != "∞";
     needButton2 = currentGraph.inputAnswer.slice(-1)[0] == ")" && currentGraph.inputAnswer.split(";")[1][2] != "∞";
     if (!needButton1 && !needButton2) 
@@ -109,7 +161,7 @@ function showClickedButton()
             clearInterval(intervalId);
             if (++currentGraph.finishedAnimations == currentGraph.finishedAnimLimit) enableButtons();
         }
-    });
+    });*/
 }
 function enableBlink(button, elapsedTime)
 {

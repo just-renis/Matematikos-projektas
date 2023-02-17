@@ -17,37 +17,38 @@ window.onload = function()
         }
     }
     else currentGraph = graph[0];
-    let intervalContainer = document.getElementById("intervalContainer");
-    for (let i = 0; i <= currentGraph.intervalSize / currentGraph.intervalStep; i++) 
-    {
-        let interval = new Interval(i, currentGraph.start + i * currentGraph.intervalStep, currentGraph.pixels, currentGraph.intervalSize / currentGraph.intervalStep, "NONE");
-        intervalContainer.appendChild(interval.element);
-        intervals[i] = interval;
-    }
+    generateIntervals();
     intervals[0].open = false;
     intervals[intervals.length - 1].open = false;
-    if (currentGraph.currentLevel >= 4)
-    {
-        createInfinitePosition(-25.6 + "%", "negative");
-        createInfinitePosition(121.6 + "%", "positive");
-    }
     filledArea = document.getElementById("filledArea").getContext("2d");
     filledArea.fillStyle = "rgba(180, 180, 180, 0.4)";
     initializeNewGraph();
     setColor();
 }
-function createInfinitePosition(margin, whichInf)
+function generateIntervals()
 {
-    let div = document.getElementById("infinitySpots");
-    let interval = new Interval(intervals.length, intervals.length, 0, 0, whichInf);
-    interval.element.classList.add("infinityInterval");
-    div.appendChild(interval.element);
-    interval.element.style.marginLeft = margin;
-    interval.position = interval.element.offsetLeft + 24.8;
-    intervals.push(interval);
+    let intervalContainer = document.getElementById("intervalContainer");
+    let needInfinities = currentGraph.currentLevel >= 4;
+    let intervalAmount = needInfinities ? currentGraph.intervalSize / currentGraph.intervalStep + 2 : currentGraph.intervalSize / currentGraph.intervalStep;
+    let labelValue = 0;
+    for (let i = 0; i <= intervalAmount; i++) 
+    {
+        if (needInfinities)
+        {
+            if (i == 0) labelValue = "-∞";
+            else if (i == intervalAmount) labelValue = "+∞";
+            else labelValue = currentGraph.start + (i - 1) * currentGraph.intervalStep;
+        }
+        else labelValue = currentGraph.start + i * currentGraph.intervalStep;
+        let interval = new Interval(labelValue);
+        intervalContainer.appendChild(interval.element);
+        intervals[i] = interval;
+        intervals[i].position = (intervals[i].element.getBoundingClientRect().left + parseFloat(currentGraph.axisConfig[2]) * i - (document.getElementById("container").getBoundingClientRect().left) - 4.8 + parseFloat(currentGraph.axisConfig[1]) + parseFloat(currentGraph.axisConfig[2]));
+    }
 }
 function circleDragSetupX(draggableCircle)
 {
+    draggableCircle.circle.addEventListener("click", function() { selectionOnCircle(draggableCircle.circle); });
     let startEvent = 'mousedown';
     let moveEvent = 'mousemove';
     let endEvent = 'mouseup';
@@ -67,7 +68,7 @@ function circleDragSetupX(draggableCircle)
             if (whichInterval != "NONE")
             {
                 draggableCircle.circle.style.left = whichInterval[0] + 'px';
-                draggableCircle.line.style.left = whichInterval[0] + currentGraph.offset + 'px';
+                draggableCircle.line.style.left = whichInterval[0] + 'px';
                 draggableCircle.intervalLabel.innerText = whichInterval[1];
                 updateLabelPos(draggableCircle);
             }
@@ -80,6 +81,11 @@ function circleDragSetupX(draggableCircle)
         }
     });
     draggableCircle.circle.ondragstart = function() { return false; };
+}
+function selectionOnCircle(circle)
+{
+    for (let i = 0; i < circles.length; i++) circles[i].circle.style.borderColor = "black";
+    circle.style.borderColor = "rgb(0, 216, 230)";
 }
 /*function circleDragSetupY(draggableCircle, otherCircle, startCircle)
 {
@@ -132,39 +138,28 @@ function setIntervalPosition(draggableCircle, newPos)
                 if (draggableCircle.intervalSpot != -1) intervals[draggableCircle.intervalSpot].open = true;
                 draggableCircle.intervalSpot = i;
                 intervals[i].open = false;
-                let intervalNumber = intervals[i].labelValue / currentGraph.trueNumber;
-                let labelNumber = intervals[i].whichInf != "NONE" ? whichInfinity(draggableCircle, intervals[i].whichInf) : intervalNumber.toLocaleString('de-DE');
-                circleToInfPos(intervals.length - 2, "negInf", "plotNegInf");
-                circleToInfPos(intervals.length - 1, "posInf", "plotPosInf");
-                return [intervals[i].position, labelNumber];
+                if (typeof intervals[i].labelValue === "string")
+                {
+                    draggableCircle.switchType("white", "5px dashed");
+                    return [intervals[i].position, intervals[i].labelValue.toLocaleString("de-DE")];
+                }
+                else return [intervals[i].position, (intervals[i].labelValue / currentGraph.trueNumber).toLocaleString("de-DE")];
             }
         }
     }
     return "NONE";
 }
-function whichInfinity(draggableCircle, whichInf)
+function changeSelectedCircleType()
 {
-    if (whichInf == "positive")
+    for (let i = 0; i < circles.length; i++)
     {
-        draggableCircle.switchType("white", "5px dashed");
-        document.getElementById("plotPosInf").style.display = "block";
-        return "+∞";
+        if (circles[i].circle.style.borderColor == "rgb(0, 216, 230)")
+        {
+            if (circles[i].circle.style.backgroundColor == "white") circles[i].switchType("black", "5px solid");
+            else circles[i].switchType("white", "5px dashed");
+            return;
+        }
     }
-    else
-    {
-        draggableCircle.switchType("white", "5px dashed");
-        document.getElementById("plotNegInf").style.display = "block";
-        return "-∞";
-    }
-}
-function circleToInfPos(which, infId, plotInfId)
-{
-    if (intervals[which].open)
-    {
-        document.getElementById(infId).style.visibility = "visible";
-        document.getElementById(plotInfId).style.display = "none";
-    }
-    else document.getElementById(infId).style.visibility = "hidden";
 }
 function changeCircleType(index)
 {
@@ -188,17 +183,16 @@ function updateLabelPos(draggableCircle)
 }
 function initializeNewGraph()
 {
-    generateAxis("axisX", "startCircleX", "endCircleX", "startLineX", "endLineX", "lineX", "X", currentGraph.pixels + "px", false);
+    generateAxis("axisX", "startCircleX", "endCircleX", "startLineX", "endLineX", "lineX", false);
     circles = 
     [
-        new Circle(axisX.querySelector('#startCircleX'), overlay.querySelector('#startLineX'), "right", overlay.querySelector("#intervalLabel1"), currentGraph.start, overlay.querySelector("#circleLabel1")),
-        new Circle(axisX.querySelector('#endCircleX'), overlay.querySelector('#endLineX'), "left", overlay.querySelector("#intervalLabel2"), currentGraph.end, overlay.querySelector("#circleLabel2"))
+        new Circle(axisX.querySelector('#startCircleX'), overlay.querySelector('#startLineX'), "right", overlay.querySelector("#intervalLabel1"), currentGraph.start, overlay.querySelector("#circleLabel1"), intervals[0].position),
+        new Circle(axisX.querySelector('#endCircleX'), overlay.querySelector('#endLineX'), "left", overlay.querySelector("#intervalLabel2"), currentGraph.end, overlay.querySelector("#circleLabel2"), intervals[intervals.length - 1].position)
     ];
     circles[0].intervalSpot = 0;
-    if (currentGraph.currentLevel >= 4) circles[1].intervalSpot = intervals.length - 3;
-    else circles[1].intervalSpot = intervals.length - 1;
+    circles[1].intervalSpot = intervals.length - 1;
     currentGraph.setGraph();
-    for (const interval of circles) updateLabelPos(interval);
+    for (const circle of circles) updateLabelPos(circle);
     circleDragSetupX(circles[0]);
     circleDragSetupX(circles[1]);
     drawFilledArea(circles[0].getBounds().left + 13, 16, circles[1].getBounds().left - circles[0].getBounds().left, 480);
