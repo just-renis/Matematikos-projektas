@@ -20,8 +20,6 @@ window.onload = function()
     generateIntervals();
     intervals[0].open = false;
     intervals[intervals.length - 1].open = false;
-    filledArea = document.getElementById("filledArea").getContext("2d");
-    filledArea.fillStyle = "rgba(180, 180, 180, 0.4)";
     initializeNewGraph();
     setColor();
 }
@@ -31,6 +29,7 @@ function generateIntervals()
     let needInfinities = currentGraph.currentLevel >= 4;
     let intervalAmount = needInfinities ? currentGraph.intervalSize / currentGraph.intervalStep + 2 : currentGraph.intervalSize / currentGraph.intervalStep;
     let labelValue = 0;
+    let interval = null;
     for (let i = 0; i <= intervalAmount; i++) 
     {
         if (needInfinities)
@@ -40,10 +39,11 @@ function generateIntervals()
             else labelValue = currentGraph.start + (i - 1) * currentGraph.intervalStep;
         }
         else labelValue = currentGraph.start + i * currentGraph.intervalStep;
-        let interval = new Interval(labelValue);
+        if (typeof labelValue === "string") interval = new Interval(labelValue);
+        else interval = new Interval((labelValue / currentGraph.trueNumber).toLocaleString("de-DE"));
         intervalContainer.appendChild(interval.element);
         intervals[i] = interval;
-        intervals[i].position = (intervals[i].element.getBoundingClientRect().left + parseFloat(currentGraph.axisConfig[2]) * i - (document.getElementById("container").getBoundingClientRect().left) - 4.8 + parseFloat(currentGraph.axisConfig[1]) + parseFloat(currentGraph.axisConfig[2]));
+        intervals[i].position = (intervals[i].element.getBoundingClientRect().left + parseFloat(currentGraph.graphConfig[2]) * i - (document.getElementById("container").getBoundingClientRect().left) - 4.8 + parseFloat(currentGraph.graphConfig[1]) + parseFloat(currentGraph.graphConfig[2]));
     }
 }
 function circleDragSetupX(draggableCircle)
@@ -138,12 +138,8 @@ function setIntervalPosition(draggableCircle, newPos)
                 if (draggableCircle.intervalSpot != -1) intervals[draggableCircle.intervalSpot].open = true;
                 draggableCircle.intervalSpot = i;
                 intervals[i].open = false;
-                if (typeof intervals[i].labelValue === "string")
-                {
-                    draggableCircle.switchType("white", "5px dashed");
-                    return [intervals[i].position, intervals[i].labelValue.toLocaleString("de-DE")];
-                }
-                else return [intervals[i].position, (intervals[i].labelValue / currentGraph.trueNumber).toLocaleString("de-DE")];
+                if (intervals[i].labelValue.includes('∞')) draggableCircle.switchType("white", "5px dashed");
+                return [intervals[i].position, intervals[i].labelValue];
             }
         }
     }
@@ -169,10 +165,25 @@ function changeCircleType(index)
 function drawFilledArea(x, y, width, height)
 {
     let canvas = document.getElementById("filledArea");
-    filledArea.clearRect(0, 0, canvas.width, canvas.height);
-    filledArea.beginPath();
-    filledArea.rect(x - document.getElementById("overlay").getBoundingClientRect().left, y, width, height);
-    filledArea.fill();
+    let ctx = canvas.getContext("2d");
+    ctx.fillStyle = "rgba(180, 180, 180, 0.4)";
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.rect(x - document.getElementById("overlay").getBoundingClientRect().left, y, width, height);
+    ctx.fill();
+}
+function drawAdditionalLines(x, needDashed)
+{
+    let canvas = document.getElementById('additionalLines');
+    let ctx = canvas.getContext('2d');
+    ctx.strokeStyle = "rgba(180, 180, 180, 0.7)";
+    ctx.lineWidth = 5;
+    if (needDashed) ctx.setLineDash([10, 10]);
+    else ctx.setLineDash([]);
+    ctx.beginPath();
+    ctx.moveTo(x, 15);
+    ctx.lineTo(x, 496);
+    ctx.stroke();
 }
 function updateLabelPos(draggableCircle)
 {
@@ -183,11 +194,11 @@ function updateLabelPos(draggableCircle)
 }
 function initializeNewGraph()
 {
-    generateAxis("axisX", "startCircleX", "endCircleX", "startLineX", "endLineX", "lineX", false);
-    circles = 
+    generateAxis("lineX", false, 2);
+    circles =
     [
-        new Circle(axisX.querySelector('#startCircleX'), overlay.querySelector('#startLineX'), "right", overlay.querySelector("#intervalLabel1"), currentGraph.start, overlay.querySelector("#circleLabel1"), intervals[0].position),
-        new Circle(axisX.querySelector('#endCircleX'), overlay.querySelector('#endLineX'), "left", overlay.querySelector("#intervalLabel2"), currentGraph.end, overlay.querySelector("#circleLabel2"), intervals[intervals.length - 1].position)
+        new Circle(overlay.querySelector('#circle0'), overlay.querySelector('#line0'), "X", overlay.querySelector("#intervalLabel0"), currentGraph.start, overlay.querySelector("#circleLabel0"), intervals[0].position),
+        new Circle(overlay.querySelector('#circle1'), overlay.querySelector('#line1'), "X", overlay.querySelector("#intervalLabel1"), currentGraph.end, overlay.querySelector("#circleLabel1"), intervals[intervals.length - 1].position)
     ];
     circles[0].intervalSpot = 0;
     circles[1].intervalSpot = intervals.length - 1;
@@ -196,6 +207,9 @@ function initializeNewGraph()
     circleDragSetupX(circles[0]);
     circleDragSetupX(circles[1]);
     drawFilledArea(circles[0].getBounds().left + 13, 16, circles[1].getBounds().left - circles[0].getBounds().left, 480);
+    let values = currentGraph.graphConfig[4].split(" ");
+    for (let i = 0; i < values.length; i++) drawAdditionalLines(parseInt(values[i].slice(0, -1)), values[i][values[i].length - 1] == "t");
+    document.getElementById("explanation").innerText = explanations[currentGraph.currentLevel - 1];
 }
 function clearTheLevel()
 {
@@ -205,6 +219,7 @@ function clearTheLevel()
 function checkIfCorrect()
 {
     let answers = currentGraph.intervalAnswers.slice();
+    let correct = 0;
     let brackets = [];
     for (let i = 0; i < circles.length; i++)
     {
@@ -212,14 +227,14 @@ function checkIfCorrect()
         {
             if (circles[i].intervalLabel.innerText == answers[j].toLocaleString("de-DE"))
             {
-                answers.splice(j, 1);
                 if (i % 2 == 0) brackets[i] = circles[j].getBackgroundColor() == "white" ? "(" : "[";
                 else brackets[i] = circles[j].getBackgroundColor() == "white" ? ")" : "]";
+                correct++;
                 break;
             }
         }
     }
-    if (answers.length > 0) levelFailed();
+    if (answers.length != correct) levelFailed();
     else
     {
         let input = document.getElementById("apibrezimoSritis").value;

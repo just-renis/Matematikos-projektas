@@ -14,37 +14,31 @@
 
 + 13. 5 lygyje tegul būna du langeliai atsakymui užrašyti: D(LANGELIS)=LANGELIS. Vėlesniuose lygiuose, tegul lieka vienas langelis atsakymui užrašyti.
 
++ 6. Nuo 3 lygio. Veiksmų eilės tvarka: 1. Pritraukiama kairė intervalo pusė. 2. Nustatomas tinkamas rutuliukas kairėje. 3. Pritraukiama dešinė intervalo pusė. 	4. Užrašomas rezultatas. 
 
++ 7. Tokia pat tvarka ir teikiant atsakymus lygiuose - pritraukiama po vieną pusę, kur reikalinga pakeičiant rutuliukus, tik po to užrašomas rezultatas.
 
-? 4. Lygio užduotis gali būti pateikta kiekvienoje to lygio užduotyje.
++ 4. Lygio užduotis gali būti pateikta kiekvienoje to lygio užduotyje.
 
-? 9. Jei yra galimybė, ties begalybe neturėtų būti rutuliukų, tik punktyrinė linija.
++ 17. Norėčiau 3 ir 9 lygiams ne tokios tamsios spalvos. Dėl spalvų tamsumo sudėtinga perskaityti tekstą.
 
-? 12. 5 lygis. Užrašant atsakymą, gal galima apibraukti tą vietą, kur vaikas turi ieškoti funkcijos vardo, kad galėtų jį įrašyti į skliaustus?
++ 11. Pateikti didesnį funkcijos vardo vaizdą, nes labai sunku įžiūrėti
 
++ 16. Jei yra galimybė 9 lygyje toje vietoje, kur yra papildomas rutuliukas, norėčiau vertikalios linijos.
 
++ 14. Jei yra galimybė 7 lygyje toje vietoje, kur viena grafiko dalis baigiasi, o kita prasideda, norėčiau kokios nors vertikalios linijos, kuri leistų tai aiškiai matyti.
 
-(+?) 11. Pateikti didesnį funkcijos vardo vaizdą, nes labai sunku įžiūrėti
-
-(+?) 17. Norėčiau 3 ir 9 lygiams ne tokios tamsios spalvos. Dėl spalvų tamsumo sudėtinga perskaityti tekstą.
-
-
-
-(+-) 16. Jei yra galimybė 9 lygyje toje vietoje, kur yra papildomas rutuliukas, norėčiau vertikalios linijos.
-
-
-
-(+-?) 6. Nuo 3 lygio. Veiksmų eilės tvarka: 1. Pritraukiama kairė intervalo pusė. 2. Nustatomas tinkamas rutuliukas kairėje. 3. Pritraukiama dešinė intervalo pusė. 	4. Užrašomas rezultatas. 
-
-(+-?) 7. Tokia pat tvarka ir teikiant atsakymus lygiuose - pritraukiama po vieną pusę, kur reikalinga pakeičiant rutuliukus, tik po to užrašomas rezultatas.
-
-(+-?) 14. Jei yra galimybė 7 lygyje toje vietoje, kur viena grafiko dalis baigiasi, o kita prasideda, norėčiau kokios nors vertikalios linijos, kuri leistų tai aiškiai matyti.
-
-(+-?) 15. Jei yra galimybė 8 lygyje toje vietoje, kur viena grafiko dalis baigiasi, o kita prasideda, norėčiau kokios nors vertikalios linijos, kuri leistų tai aiškiai matyti.
++ 15. Jei yra galimybė 8 lygyje toje vietoje, kur viena grafiko dalis baigiasi, o kita prasideda, norėčiau kokios nors vertikalios linijos, kuri leistų tai aiškiai matyti.
 
 
 
-! 8. Ar yra galimybė mokiniui nurodyti, kurioje vietoje jo atsakymas yra klaidingas? Kadangi mokinys turi atliikti daug žingsnių, gal galima apibraukti tai, kur suklydo atlikdamas užduotį?
+(+-?) 12. 5 lygis. Užrašant atsakymą, gal galima apibraukti tą vietą, kur vaikas turi ieškoti funkcijos vardo, kad galėtų jį įrašyti į skliaustus?
+
+(+-?) 9. Jei yra galimybė, ties begalybe neturėtų būti rutuliukų, tik punktyrinė linija.
+
+
+
+! 8. Ar yra galimybė mokiniui nurodyti, kurioje vietoje jo atsakymas yra klaidingas? Kadangi mokinys turi atlikti daug žingsnių, gal galima apibraukti tai, kur suklydo atlikdamas užduotį?
 
 
 

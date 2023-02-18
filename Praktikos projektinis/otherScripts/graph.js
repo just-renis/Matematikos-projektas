@@ -1,22 +1,20 @@
 class Graph 
 {
     static graphNumber = 0;
-    constructor(path, graphName, start, end, intervalStep, axisConfig = [], intervalAnswers = [], inputAnswer, trueNumber) 
+    constructor(path, graphName, start, end, intervalStep, graphConfig = [], intervalAnswers = [], inputAnswer, trueNumber, brackets) 
     {
         this.path = path;
         this.start = start;
         this.end = end;
         this.intervalSize = (this.end - this.start);
         this.intervalStep = intervalStep;
-        this.axisConfig = axisConfig;
+        this.graphConfig = graphConfig;
         this.intervalAnswers = intervalAnswers;
         this.inputAnswer = inputAnswer;
         this.graphName = graphName;
         this.currentLevel = graphName.split(" ")[1][0];
-        if (this.currentLevel < 3) this.finishedAnimLimit = 3;
-        else this.finishedAnimLimit = 4;
-        this.finishedAnimations = 0;
         this.trueNumber = trueNumber;
+        this.brackets = brackets;
     }
     setGraph() 
     {
@@ -25,8 +23,12 @@ class Graph
     }
     configGraph() 
     {
-        intervalContainer.style.left = this.axisConfig[1];
+        intervalContainer.style.left = this.graphConfig[1];
+        document.getElementById("functionBlock").style.margin = this.graphConfig[3];
+        document.getElementById("functionName").style.margin = this.graphConfig[3];
+        let funcName = currentGraph.currentLevel == 5 ? currentGraph.inputAnswer[0] : currentGraph.currentLevel > 5 ? currentGraph.inputAnswer[2] : "f";
+        document.getElementById("functionName").innerText = "y=" + funcName + "(x)";
         const allIntervals = document.querySelectorAll('.interval');
-        for (let i = 0; i < allIntervals.length; i++) allIntervals[i].style.marginLeft = this.axisConfig[2];
+        for (let i = 0; i < allIntervals.length; i++) allIntervals[i].style.marginLeft = this.graphConfig[2];
     }
 }

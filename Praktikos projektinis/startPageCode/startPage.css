@@ -42,7 +42,7 @@ button
 }
 #level3
 {
-    background-color: green;
+    background-color: rgb(0, 255, 150);
 }
 #level4
 {
@@ -66,5 +66,5 @@ button
 }
 #level9
 {
-    background-color: darkred;
+    background-color: pink;
 }

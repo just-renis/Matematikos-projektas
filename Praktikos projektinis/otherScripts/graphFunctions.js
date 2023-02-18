@@ -37,13 +37,19 @@ function disableNotNeededElements()
         document.getElementById("functionNameInput").style.display = "none";
     }
 }
-function generateAxis(axisId, startCircleId, endCircleId, startLineId, endLineId, lineClassName, isExample)
+function generateAxis(lineClassName, isExample, circlesAmount)
 {
-    let axis = setElement("div", axisId);
-    let startCircle = setElement("div", startCircleId, "circle");
-    let endCircle = setElement("div", endCircleId, "circle");
-    let startLine = setElement("div", startLineId, lineClassName);
-    let endLine = setElement("div", endLineId, lineClassName);
+    let localCircles = [];
+    let lines = [];
+    let intervalLabels = [];
+    let circleLabels = [];
+    for (let i = 0; i < circlesAmount; i++) 
+    {
+        lines[i] = setElement("div", "line" + i, lineClassName);
+        localCircles[i] = setElement("div", "circle" + i, "circle");
+        intervalLabels[i] = setElement("p", "intervalLabel" + i);
+        circleLabels[i] = setElement("p", "circleLabel" + i, "circleLabel");
+    }
     let overlay = document.getElementById("overlay");
     let apSritisLabel = setElement("label", "apSritisLabel");
     let apSritisSecondLabel = setElement("label", "apSritisSecondLabel");
@@ -65,8 +71,7 @@ function generateAxis(axisId, startCircleId, endCircleId, startLineId, endLineId
         input.setAttribute("readonly", true);
         functionNameInput.setAttribute("readonly", true);
     }
-    appendChilds(axis, [startCircle, endCircle]);
-    appendChilds(overlay, [axis, startLine, endLine]);
+    for (let i = 0; i < circlesAmount; i++) appendChilds(overlay, [lines[i], localCircles[i], intervalLabels[i], circleLabels[i]]);
     appendChilds(document.getElementById("apibrezimoSritiesContainer"), [apSritisLabel, functionNameInput, apSritisSecondLabel, apSritisBracket1, input, apSritisBracket2]);
     disableNotNeededElements();
 }
