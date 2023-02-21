@@ -24,6 +24,11 @@ window.onload = function()
     initializeNewGraph();
     setColor();
     initAnimations(graphAnimation);
+    for (let i = 0; i < currentGraph.currentLevel; i++) 
+    {
+        if (i % 2 == 0) document.getElementById("rulesLeftSide").innerHTML += rules[i] + '<br>';
+        else document.getElementById("rulesRightSide").innerHTML += rules[i] + '<br>';
+    }
 }
 async function initAnimations(graphAnimation)
 {

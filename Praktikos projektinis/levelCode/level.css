@@ -113,6 +113,10 @@ button
     margin-top: 5px;
     text-align: center;
 }
+#apibrezimoSritis
+{
+    border-color: black;
+}
 #apSritisLabel
 {
     font-weight: bold;
@@ -167,4 +171,22 @@ button
     color: black;
     font-size: 20px;
     z-index: 3;
+}
+#functionNameInput
+{
+    border-color: black;
+}
+.rules
+{
+    top: 10%;
+    font-size: 18px;
+    color: black;
+}
+#rulesLeftSide
+{
+    right: 80%;
+}
+#rulesRightSide
+{
+    left: 80%;
 }

@@ -22,6 +22,14 @@ window.onload = function()
     intervals[intervals.length - 1].open = false;
     initializeNewGraph();
     setColor();
+    for (let i = 0; i < currentGraph.currentLevel; i++) 
+    {
+        if (i % 2 == 0) document.getElementById("rulesLeftSide").innerHTML += rules[i] + '<br>';
+        else document.getElementById("rulesRightSide").innerHTML += rules[i] + '<br>';
+    }
+    document.getElementById("apibrezimoSritis").addEventListener('click', function() { document.getElementById("apibrezimoSritis").style.borderColor = "black"; });
+    document.getElementById("changeCircleButton").addEventListener('click', function() { document.getElementById("changeCircleButton").style.borderColor = "rgb(0, 200, 100)"; });
+    document.getElementById("functionNameInput").addEventListener('click', function() { document.getElementById("functionNameInput").style.borderColor = "black"; });
 }
 function generateIntervals()
 {
@@ -218,7 +226,7 @@ function clearTheLevel()
 }
 function checkIfCorrect()
 {
-    let answers = currentGraph.intervalAnswers.slice();
+    let answers = currentGraph.intervalAnswers;
     let correct = 0;
     let brackets = [];
     for (let i = 0; i < circles.length; i++)
@@ -234,7 +242,7 @@ function checkIfCorrect()
             }
         }
     }
-    if (answers.length != correct) levelFailed();
+    if (answers.length != correct) levelFailed(0);
     else
     {
         let input = document.getElementById("apibrezimoSritis").value;
@@ -242,15 +250,31 @@ function checkIfCorrect()
         {
             if (currentGraph.currentLevel > 5 && input.includes("="))
             {
-                if (brackets[0] == input.split("=")[1][0] && brackets[1] == input.slice(-1)[0] && currentGraph.inputAnswer == input) levelCompleted();
-                else levelFailed();
+                if (brackets[0] == currentGraph.brackets[0] && brackets[1] == currentGraph.brackets.slice(-1)[0])
+                {
+                    if (currentGraph.inputAnswer == input) levelCompleted();
+                    else levelFailed(1);
+                }
+                else levelFailed(2);
             }
-            else if (currentGraph.currentLevel == 5 && document.getElementById("functionNameInput").value == currentGraph.inputAnswer[0] && brackets[0] == input[0] && brackets[1] == input.slice(-1)[0] && currentGraph.inputAnswer.slice(1) == input) levelCompleted();
-            else if (brackets[0] == input[0] && brackets[1] == input.slice(-1)[0] && currentGraph.inputAnswer == input) levelCompleted();
-            else levelFailed();
+            else if (currentGraph.currentLevel == 5 && brackets[0] == currentGraph.brackets[0] && brackets[1] == currentGraph.brackets.slice(-1)[0])
+            {
+                if (document.getElementById("functionNameInput").value == currentGraph.inputAnswer[0])
+                {
+                    if (currentGraph.inputAnswer.slice(1) == input) levelCompleted();
+                    else levelFailed(1);
+                }
+                else levelFailed(3);
+            }
+            else if (brackets[0] == currentGraph.brackets[0] && brackets[1] == currentGraph.brackets.slice(-1)[0]) 
+            {
+                if (currentGraph.inputAnswer == input) levelCompleted();
+                else levelFailed(1);
+            }
+            else levelFailed(2);
         }
         else if (currentGraph.inputAnswer == input) levelCompleted();
-        else levelFailed();
+        else levelFailed(1);
     }
 }
 function nextLevel()
@@ -287,9 +311,29 @@ function levelCompleted()
     document.getElementById("answerButton").innerText = "Kitas lygis";
     document.getElementById("answerButton").onclick = nextLevel;
 }
-function levelFailed()
+function levelFailed(wrong)
 {
-    document.getElementById("ats").innerText = "Neteisingai.";
+    switch(wrong)
+    {
+        case 0:
+            for (let i = 0; i < circles.length; i++) circles[i].circle.style.borderColor = "red";
+            document.getElementById("ats").innerText = "Neteisinguose vietose skrituliukai.";
+            break;
+        case 1:
+            document.getElementById("apibrezimoSritis").style.borderColor = "red";
+            document.getElementById("ats").innerText = "Neteisingai užrašyta apibrėžimo sritis";
+            break;
+        case 2:
+            document.getElementById("changeCircleButton").style.borderColor = "red";
+            document.getElementById("ats").innerText = "Netinkamai yra nustatyti skrituliukų tipai grafike.";
+            break;
+        case 3:
+            document.getElementById("functionNameInput").style.borderColor = "red";
+            document.getElementById("ats").innerText = "Neteisingas funkcijos vardas.";
+            break;
+        default:
+            document.getElementById("ats").innerText = "Neteisingai.";
+    }
     document.getElementById("showAnswerButton").style.visibility = "visible";
 }
 function writeInfSymbol(isPositive)

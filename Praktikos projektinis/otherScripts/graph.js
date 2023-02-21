@@ -27,7 +27,8 @@ class Graph
         document.getElementById("functionBlock").style.margin = this.graphConfig[3];
         document.getElementById("functionName").style.margin = this.graphConfig[3];
         let funcName = currentGraph.currentLevel == 5 ? currentGraph.inputAnswer[0] : currentGraph.currentLevel > 5 ? currentGraph.inputAnswer[2] : "f";
-        document.getElementById("functionName").innerText = "y=" + funcName + "(x)";
+        if (currentGraph.currentLevel == 5) document.getElementById("functionName").innerText = `y=<span style='color: red'>funcName</span>(x)`;
+        else document.getElementById("functionName").innerText = "y=" + funcName + "(x)";
         const allIntervals = document.querySelectorAll('.interval');
         for (let i = 0; i < allIntervals.length; i++) allIntervals[i].style.marginLeft = this.graphConfig[2];
     }

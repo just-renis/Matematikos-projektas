@@ -1,4 +1,4 @@
-function disableNotNeededElements()
+function disableNotNeededElements(isExample)
 {
     if (currentGraph.currentLevel > 1)
     {
@@ -17,19 +17,15 @@ function disableNotNeededElements()
     }
     else if (currentGraph.currentLevel < 4)
     {
-        let button = document.getElementById("negInfButton");
-        if (button) // If it is real level or example level.
+        if (isExample)
         {
             document.getElementById("answerButton").innerText = "Patvirtinti atsakymą";
             document.getElementById("answerButton").onclick = checkIfCorrect;
             document.getElementById("ats").innerText = "";
         }
-        document.getElementById("functionNameInput").style.visibility = "hidden";
+        document.getElementById("functionNameInput").style.display = "none";
     }
-    if (currentGraph.currentLevel == 5)
-    {
-        document.getElementById("apSritisLabel").innerText = "D(";
-    }
+    if (currentGraph.currentLevel == 5) document.getElementById("apSritisLabel").innerText = "D(";
     else
     {
         if (currentGraph.currentLevel > 4) document.getElementById("apSritisLabel").style.display = "none";
@@ -73,7 +69,7 @@ function generateAxis(lineClassName, isExample, circlesAmount)
     }
     for (let i = 0; i < circlesAmount; i++) appendChilds(overlay, [lines[i], localCircles[i], intervalLabels[i], circleLabels[i]]);
     appendChilds(document.getElementById("apibrezimoSritiesContainer"), [apSritisLabel, functionNameInput, apSritisSecondLabel, apSritisBracket1, input, apSritisBracket2]);
-    disableNotNeededElements();
+    disableNotNeededElements(isExample);
 }
 function setElement(whichElement, id, className)
 {

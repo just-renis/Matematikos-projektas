@@ -44,3 +44,15 @@ let explanations =
     "Remdamiesi grafiku, nustatykite pateiktos funkcijos apibrėžimo sritį, pasirinkdami jos pradžią ir pabaigą grafike ir užrašykite ją intervalu, nurodydami teisingus intervalo pradžios ir pabaigos skliaustus ir nurodydami funkcijos vardą, kai funkcijos grafikas sudarytas iš kelių atskirų dalių.",
     "Remdamiesi grafiku, nustatykite pateiktos funkcijos apibrėžimo sritį ir užrašykite ją intervalu."
 ];
+let rules = 
+[
+    "1. Apibrėžimo sritis - visos argumento (x) reikšmės, su kuriomis funkcija egzistuoja (galima nubrėžti jos grafiką).\nApibrėžimo sritis žymima D(funkcijos vardas)=intervalas.",
+    "2. Jei funkcijos grafikas prasideda/baigiasi užspalvintu rutuliuku, tai ir apibrėžimo sritis grafike prasidės/baigsis užspalvintu rutuliuku, o intervalo pradžioje/pabaigoje žymėsime laužtinius skliaustus.",
+    "3. Jei funkcijos grafikas prasideda/baigiasi kiauru rutuliuku, tai ir apibrėžimo sritis grafike prasidės/baigsis kiauru rutuliuku, o intervalo pradžioje/pabaigoje žymėsime lenktus skliaustus.",
+    "4. Jei funkcijos grafikas neturi pradžios/pabaigos, tai jos apibrėžimo sritis prasideda/pasibaigia begalybėje ir intervale yra žymima -∞/+∞. Begalybė visada rašoma su lenktais skliaustais.",
+    "5. Kiekviena funkcija turi vardą. Funkcijos vadinamos mažosiomis abėcėlės raidėmis.",
+    "6. Jei funkcijos grafikas prasideda/baigiasi lenkta linija, tai jos apibrėžimo sritis prasidės/baigsis užspalvintu rutuliuku, o intervalo pradžioje/pabaigoje žymėsime laužtinius skliaustus.",
+    "7. Jei viena funkcijos grafiko dalis baigiasi užspalvintu rutuliuku, o kita funkcijos grafiko dalis toje pačioje vietoje prasideda užspalvintu rutuliuku, tai apibrėžimo sritį užrašome vienu intervalu be trūkių.",
+    "8. Jei viena funkcijos grafiko dalis baigiasi užspalvintu/kiauru rutuliuku, o kita funkcijos grafiko dalis toje pačioje vietoje prasideda kiauru/užspalvintu rutuliuku, tai apibrėžimo sritį užrašome vienu intervalu be trūkių.",
+    "9. Jei funkcijos grafikas sudarytas iš dviejų viena virš kitos einančių dalių ir vienoje iš tų dalių turime užspalvintą rutuliuką, tai apibrėžimo sritį užrašome vienu intervalu be trūkių."
+];
