@@ -1,8 +1,10 @@
 let intervals = [];
+let isExample = window.sessionStorage.getItem("isExample");
 window.onload = function()
 {
     let levelName = window.sessionStorage.getItem("lygis");
-    if (levelName != "empty")
+    let graphAnimation = intervalAnimations[0];
+    if (levelName !== null)
     {
         for (let i = 0; i < graphs.length; i++)
         {
@@ -11,6 +13,7 @@ window.onload = function()
                 currentGraph = graphs[i];
                 document.getElementById("title").innerText = "Apibrėžimo sritis - " + currentGraph.graphName;
                 document.getElementById("levelTag").innerText = "Apibrėžimo sritis - " + currentGraph.graphName;
+                graphAnimation = intervalAnimations[i];
                 Graph.graphNumber = window.sessionStorage.getItem("graphNumber");
                 break;
             }
@@ -18,18 +21,30 @@ window.onload = function()
     }
     else currentGraph = graph[0];
     generateIntervals();
-    intervals[0].open = false;
-    intervals[intervals.length - 1].open = false;
+    if (isExample === "false")
+    {
+        intervals[0].open = false;
+        intervals[intervals.length - 1].open = false;
+    }
     initializeNewGraph();
     setColor();
+    if (isExample === "true") initAnimations(graphAnimation);
     for (let i = 0; i < currentGraph.currentLevel; i++) 
     {
         if (i % 2 == 0) document.getElementById("rulesLeftSide").innerHTML += rules[i] + '<br>';
         else document.getElementById("rulesRightSide").innerHTML += rules[i] + '<br>';
     }
-    document.getElementById("apibrezimoSritis").addEventListener('click', function() { document.getElementById("apibrezimoSritis").style.borderColor = "black"; });
-    document.getElementById("changeCircleButton").addEventListener('click', function() { document.getElementById("changeCircleButton").style.borderColor = "rgb(0, 200, 100)"; });
-    document.getElementById("functionNameInput").addEventListener('click', function() { document.getElementById("functionNameInput").style.borderColor = "black"; });
+    if (isExample === "false")
+    {
+        document.getElementById("apibrezimoSritis").addEventListener('click', function() { document.getElementById("apibrezimoSritis").style.borderColor = "black"; });
+        document.getElementById("changeCircleButton").addEventListener('click', function() { document.getElementById("changeCircleButton").style.borderColor = "rgb(0, 200, 100)"; });
+        document.getElementById("functionNameInput").addEventListener('click', function() { document.getElementById("functionNameInput").style.borderColor = "black"; });
+    }
+}
+async function initAnimations(graphAnimation)
+{
+    for (let i = 0; i < circles.length; i++) await animateInterval(i, graphAnimation[i]);
+    animateInput(currentGraph.inputAnswer, document.getElementById("apibrezimoSritis"));
 }
 function generateIntervals()
 {
@@ -220,7 +235,7 @@ function updateLabelPos(draggableCircle)
 }
 function initializeNewGraph()
 {
-    generateAxis("lineX", false, 2);
+    generateAxis("lineX", isExample, 2);
     circles =
     [
         new Circle(overlay.querySelector('#circle0'), overlay.querySelector('#line0'), "X", overlay.querySelector("#intervalLabel0"), currentGraph.start, overlay.querySelector("#circleLabel0"), intervals[0].position),
@@ -230,8 +245,11 @@ function initializeNewGraph()
     circles[1].intervalSpot = intervals.length - 1;
     currentGraph.setGraph();
     for (const circle of circles) updateLabelPos(circle);
-    circleDragSetupX(circles[0]);
-    circleDragSetupX(circles[1]);
+    if (isExample === "false")
+    {
+        circleDragSetupX(circles[0]);
+        circleDragSetupX(circles[1]);
+    }
     drawFilledArea(circles[0].getBounds().left + 13, 16, circles[1].getBounds().left - circles[0].getBounds().left, 480);
     let values = currentGraph.graphConfig[4].split(" ");
     for (let i = 0; i < values.length; i++) drawAdditionalLines(parseInt(values[i].slice(0, -1)), values[i][values[i].length - 1] == "t");
@@ -239,7 +257,7 @@ function initializeNewGraph()
 }
 function clearTheLevel()
 {
-    let deleteIds = ["axisX", "startLineX", "endLineX", "plotNegInf", "plotPosInf"];
+    let deleteIds = ["startLineX", "endLineX"];
     for (const deleteId of deleteIds) document.getElementById(deleteId).remove();
 }
 function checkIfCorrect()
@@ -311,23 +329,23 @@ function nextLevel()
             window.location.href = "../startPageCode/startPage.html";
             break;
         default:
+            window.sessionStorage.setItem("isExample", false);
             window.sessionStorage.setItem("lygis", graphs[++Graph.graphNumber].graphName);
             window.sessionStorage.setItem("graphNumber", Graph.graphNumber);
-            if (graphs[Graph.graphNumber].graphName.split(".")[1][0] != "0") window.location.href = "../levelCode/level.html";
-            else window.location.href = "../exampleLevelCode/exampleLevel.html";
+            window.location.href = "../levelCode/level.html";
     }
 }
 function showAnswer()
 {
+    window.sessionStorage.setItem("isExample", true);
     window.sessionStorage.setItem("lygis", currentGraph.graphName);
-    window.location = "../exampleLevelCode/exampleLevel.html";
+    window.location = "../levelCode/level.html";
 }
 function levelCompleted()
 {
     document.getElementById("ats").innerText = "Teisingai!";
-    document.getElementById("answerButton").style.backgroundColor = "rgb(0, 255, 100)";
-    document.getElementById("answerButton").innerText = "Kitas lygis";
-    document.getElementById("answerButton").onclick = nextLevel;
+    document.getElementById("answerButton").style.visibility = "hidden";
+    document.getElementById("nextLevelButton").style.visibility = "visible";
 }
 function levelFailed(wrong)
 {
@@ -357,6 +375,11 @@ function levelFailed(wrong)
 function writeInfSymbol(isPositive)
 {
     document.getElementById("apibrezimoSritis").value += isPositive ? "+∞" : "-∞";
+}
+function repeatExample()
+{
+    window.sessionStorage.setItem("isExample", true);
+    window.location.href = "../levelCode/level.html";
 }
 function goBack()
 {

@@ -7,7 +7,6 @@ class Graph
         this.start = start;
         this.end = end;
         this.intervalSize = (this.end - this.start);
-        this.intervalWidth = (this.end - this.start) * this.intervalSize;
         this.intervalStep = intervalStep;
         this.graphConfig = graphConfig;
         this.intervalAnswers = intervalAnswers;

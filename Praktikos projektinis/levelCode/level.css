@@ -104,7 +104,7 @@ button
     font-weight: bold;
     border: 3px solid rgb(0, 200, 100);
 }
-#showAnswerButton, #changeCircleButton, #negInfButton, #posInfButton
+#showAnswerButton, #changeCircleButton, #negInfButton, #posInfButton, #nextLevelButton, #repeatExample
 {
     visibility: hidden;
 }
@@ -137,8 +137,8 @@ button
     height: 20px;
     margin-top: 20%;
     border-radius: 50%;
-    background: red;
-    border: solid black 3px;
+    background: transparent;
+    border: solid transparent 3px;
 }
 #infinitySpots
 {
