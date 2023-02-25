@@ -135,10 +135,10 @@ button
 {
     width: 20px;
     height: 20px;
-    margin-top: 30.4%;
+    margin-top: 20%;
     border-radius: 50%;
-    background: transparent;
-    border: solid transparent 3px;
+    background: red;
+    border: solid black 3px;
 }
 #infinitySpots
 {

@@ -17,7 +17,7 @@ function disableNotNeededElements(isExample)
     }
     else if (currentGraph.currentLevel < 4)
     {
-        if (isExample)
+        if (!isExample)
         {
             document.getElementById("answerButton").innerText = "Patvirtinti atsakymą";
             document.getElementById("answerButton").onclick = checkIfCorrect;

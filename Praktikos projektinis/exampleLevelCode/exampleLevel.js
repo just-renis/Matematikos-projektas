@@ -42,6 +42,7 @@ function generateIntervals()
     let intervalAmount = needInfinities ? currentGraph.intervalSize / currentGraph.intervalStep + 2 : currentGraph.intervalSize / currentGraph.intervalStep;
     let labelValue = 0;
     let interval = null;
+    currentGraph.graphConfig[2] = correctScale() + "px";
     for (let i = 0; i <= intervalAmount; i++) 
     {
         if (needInfinities)
@@ -57,6 +58,23 @@ function generateIntervals()
         intervals[i] = interval;
         intervals[i].position = (intervals[i].element.getBoundingClientRect().left + parseFloat(currentGraph.graphConfig[2]) * i - (document.getElementById("container").getBoundingClientRect().left) - 4.8 + parseFloat(currentGraph.graphConfig[1]) + parseFloat(currentGraph.graphConfig[2]));
     }
+}
+function correctScale()
+{
+    let distance = parseFloat(currentGraph.graphConfig[2].slice(0, currentGraph.graphConfig[2].length - 2));
+    if (window.devicePixelRatio <= 1) return distance;
+    else if (window.devicePixelRatio <= 1.25) return distance + 1.15;
+    else if (window.devicePixelRatio <= 1.5) return distance + 0.65;
+    else if (window.devicePixelRatio <= 1.75) return distance + 0.3;
+    else if (window.devicePixelRatio <= 2) return distance;
+    else if (window.devicePixelRatio <= 2.25) return distance + 0.6;
+    else if (window.devicePixelRatio <= 2.5) return distance + 0.4;
+    else if (window.devicePixelRatio <= 2.75) return distance + 0.2; // unknown.
+    else if (window.devicePixelRatio <= 3) return distance;
+    else if (window.devicePixelRatio <= 3.25) return distance + 0.4; // unknown.
+    else if (window.devicePixelRatio <= 3.5) return distance + 0.3;
+    else if (window.devicePixelRatio <= 3.75) return distance + 0.15;
+    else return distance;
 }
 function changeSelectedCircleType()
 {
