@@ -1,4 +1,4 @@
-let intervals = [];
+
 let isExample = window.sessionStorage.getItem("isExample");
 window.onload = function()
 {
@@ -46,6 +46,7 @@ async function initAnimations(graphAnimation)
     for (let i = 0; i < circles.length; i++) await animateInterval(i, graphAnimation[i]);
     animateInput(currentGraph.inputAnswer, document.getElementById("apibrezimoSritis"));
 }
+let intervals = [];
 function generateIntervals()
 {
     let intervalContainer = document.getElementById("intervalContainer");
@@ -67,7 +68,8 @@ function generateIntervals()
         else interval = new Interval((labelValue / currentGraph.trueNumber).toLocaleString("de-DE"));
         intervalContainer.appendChild(interval.element);
         intervals[i] = interval;
-        intervals[i].position = (intervals[i].element.getBoundingClientRect().left + (parseFloat(currentGraph.graphConfig[2])) * i - (document.getElementById("container").getBoundingClientRect().left) - 4.8 + parseFloat(currentGraph.graphConfig[1]) + parseFloat(currentGraph.graphConfig[2]));
+        intervals[i].position = (intervals[i].element.getBoundingClientRect().left + (parseFloat(currentGraph.graphConfig[2])) * i 
+        - (document.getElementById("container").getBoundingClientRect().left) - 4.8 + parseFloat(currentGraph.graphConfig[1]) + parseFloat(currentGraph.graphConfig[2]));
     }
 }
 function correctScale()
