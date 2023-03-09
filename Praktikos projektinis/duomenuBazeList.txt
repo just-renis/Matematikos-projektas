@@ -1,8 +1,8 @@
 Guest: gali ieiti ir daryt uzduotys iprastai be registracijos +
 Mokytojas: 
 1. susikurti mokytojo paskyra, admin uztvirtina. +
-2. uztvirtinti mokinius kai jie uzsiregistruoja pas tam tikra mokytoja. !
-3. skirstyti mokinius pagal norima pozymi. !
+2. užregistruoti savo mokinius. +
+3. skirstyti mokinius pagal norima pozymi. +
 4. gali atstatyti slaptazodi mokinio. !
 Mokinys: gali pasikeisti slaptazodi, prisiregistraves. !
 Admin: Uztvirtina mokytojus, gali atstatyti slaptazodi mokinio. +!

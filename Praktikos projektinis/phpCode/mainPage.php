@@ -4,29 +4,48 @@
     $teachersRows = mysqli_fetch_all($teachers, MYSQLI_ASSOC);
     $admins = mysqli_query($conn, "SELECT * FROM admins");
     $adminsRows = mysqli_fetch_all($admins, MYSQLI_ASSOC);
+    $students = mysqli_query($conn, "SELECT * FROM students");
+    $studentsRows = mysqli_fetch_all($students, MYSQLI_ASSOC);
     $registerError = "";
     $loginError = "";
     if (isset($_POST["loginButton"]))
     {
         foreach ($teachersRows as $row)
         {
-            if ($_POST["logUsername"] === $row["username"] && password_verify($_POST["logPassword"], $row["password"])) header("location: ../startPageCode/startPage.php");
+            if ($_POST["logUsername"] === $row["username"] && password_verify($_POST["logPassword"], $row["password"])) 
+            {
+                $_SESSION['id'] = $row["id"];
+                header("location: teacherView.php");
+                exit;
+            }
         }
         foreach ($adminsRows as $row)
         {
-            if ($_POST["logUsername"] === $row["username"] && password_verify($_POST["logPassword"], $row["password"])) header("location: adminView.php");
+            if ($_POST["logUsername"] === $row["username"] && password_verify($_POST["logPassword"], $row["password"]))
+            {
+                header("location: adminView.php");
+                exit;
+            }
         }
-        $loginError = "Incorrect username or password.";
+        foreach ($studentsRows as $row)
+        {
+            if ($_POST["logUsername"] === $row["username"] && password_verify($_POST["logPassword"], $row["password"]))
+            {
+                header("location: ../startPageCode/startPage.php");
+                exit;
+            }
+        }
+        $loginError = "Neteisingas vartotojo vardas arba slaptažodis";
     }
     if (isset($_POST["registerButton"]))
     {
-        if (empty($_POST["regUsername"]) || empty($_POST["regPassword"]) || empty($_POST["regConfirm_password"])) $registerError = "All fields are required";
+        if (empty($_POST["regUsername"]) || empty($_POST["regPassword"]) || empty($_POST["regConfirm_password"])) $registerError = "Visi laukai turi būti užpildyti";
         else
         {
-            if (strlen($_POST["regPassword"]) < 6) $registerError = "Password must be at least 6 characters long";
+            if (strlen($_POST["regPassword"]) < 6) $registerError = "Slaptažodis turėtų būti sudarytas bent jau iš 6 simbolių";
             else
             {
-                if ($_POST["regPassword"] !== $_POST["regConfirm_password"]) $registerError = "Passwords do not match";
+                if ($_POST["regPassword"] !== $_POST["regConfirm_password"]) $registerError = "Slaptažodžiai nesutampa";
                 else
                 {
                     $usernameExists = false;
@@ -38,15 +57,12 @@
                     {
                         $username = $_POST["regUsername"];
                         $password = password_hash($_POST["regPassword"], PASSWORD_DEFAULT);
-                        if ($_POST["userType"] === "teacher")
-                        {
-                            $sql = "INSERT INTO pendingteachers (username, password, date) VALUES ('$username','$password',".time().")";
-                            mysqli_query($conn, $sql);
-                            header("location: ../startPageCode/startPage.php");
-                        }
-                      //  else check if its student.
+                        $sql = "INSERT INTO pendingteachers (username, password, date) VALUES ('$username','$password','".date('Y-m-d H:i:s', time())."')";
+                        mysqli_query($conn, $sql);
+                        header("Location: ".$_SERVER['PHP_SELF']);
+                        exit;
                     }
-                    else $registerError = "Such username already exists.";
+                    else $registerError = "Toks vartotojo vardas jau egzistuoja";
                 }
             }
         }
@@ -62,13 +78,8 @@
     <body>
         <div class="form-container">
             <div class="form-column">
-                <h2>Registracija</h2>
+                <h2>Registracija mokytojui</h2>
                 <form method="post" id = "registrationForm">
-                    <label for="userType">Vartotojas:</label>
-                    <select id="userType" name="userType">
-                        <option value="teacher" <?php if(isset($_POST['userType']) && $_POST['userType'] == 'teacher') echo 'selected'; ?>>Mokytojas</option>
-                        <option value="student" <?php if(isset($_POST['userType']) && $_POST['userType'] == 'student') echo 'selected'; ?>>Mokinys</option>
-                    </select><br><br>
                     <label for="regUsername">Vartotojo vardas:</label>
                     <input type="text" id="regUsername" name="regUsername" required value="<?php echo isset($_POST['regUsername']) ? $_POST['regUsername'] : '' ?>"><br><br>
                     <label for="regPassword">Slaptažodis:</label>

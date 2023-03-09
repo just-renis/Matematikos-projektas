@@ -1,5 +1,6 @@
 <?php
     date_default_timezone_set('Europe/Vilnius');
+    session_start();
     $serverName = "localhost";
     $username = "root";
     $password = "";
