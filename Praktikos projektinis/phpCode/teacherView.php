@@ -20,7 +20,7 @@
                     {
                         $username = $_POST["regUsername"];
                         $password = password_hash($_POST["regPassword"], PASSWORD_DEFAULT);
-                        $id = $_SESSION['id'];
+                        $id = $_SESSION['teacherId'];
                         $attribute = $_POST["regAttribute"];
                         $sql = "INSERT INTO students (username, password, addedAt, level, points, luckIndicator, attribute, teacherId) VALUES ('$username', '$password','".date('Y-m-d H:i:s', time())."', 0, 0, 0, '$attribute', $id)";
                         mysqli_query($conn, $sql);

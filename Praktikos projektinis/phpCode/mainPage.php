@@ -14,7 +14,7 @@
         {
             if ($_POST["logUsername"] === $row["username"] && password_verify($_POST["logPassword"], $row["password"])) 
             {
-                $_SESSION['id'] = $row["id"];
+                $_SESSION['teacherId'] = $row["id"];
                 header("location: teacherView.php");
                 exit;
             }
@@ -31,6 +31,7 @@
         {
             if ($_POST["logUsername"] === $row["username"] && password_verify($_POST["logPassword"], $row["password"]))
             {
+                $_SESSION['studentId'] = $row["id"];
                 header("location: ../startPageCode/startPage.php");
                 exit;
             }
@@ -74,6 +75,13 @@
     <head>
         <title>Pagrindinis puslapis</title>
         <link rel="stylesheet" href="registerLoginForm.css">
+        <script>
+            function guestJoin()
+            {
+                <?php $_SESSION['studentId'] = null; ?>
+                window.location.href='../startPageCode/startPage.php'
+            }
+        </script>
     </head>
     <body>
         <div class="form-container">
@@ -87,7 +95,7 @@
                     <label for="regConfirm_password">Patvirtinkite slaptažodį:</label>
                     <input type="password" id="regConfirm_password" name="regConfirm_password" required><br><br>
                     <input type = "submit" value = "Registruotis" name="registerButton">
-                    <button id = "loginAsGuest" onclick="window.location.href='../startPageCode/startPage.php'">Prisijungti kaip svečias</button>
+                    <button id = "loginAsGuest" onclick=guestJoin()>Prisijungti kaip svečias</button>
                 </form>
                 <p name="registerErrorDisplay" class="errorDisplay"><?php echo $registerError;?></p>
             </div>

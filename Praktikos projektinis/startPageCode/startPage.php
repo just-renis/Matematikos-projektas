@@ -1,3 +1,11 @@
+<?php
+    session_start();
+    if(isset($_POST['changePassword']) && $_SESSION['studentId'] !== null) changePassword();
+    function changePassword()
+    {
+        echo "Yes";
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,7 +14,10 @@
         <script src="startPage.js"></script>
     </head>
     <body>
-        <button id="clearProgress" onclick="clearProgress()">Išvalyti progresą</button>
+        <button id="clearProgress" onclick="clearProgress()">Išvalyti progresą</button><br><br><br>
+        <form id="changePasswordForm" method="post">
+            <input type="submit" name="changePassword" value="Pasikeisti slaptažodį"/>
+        </form>
         <h1 id="levelTag">Lygiai</h1>
         <div class="container">
             <div id="buttons">

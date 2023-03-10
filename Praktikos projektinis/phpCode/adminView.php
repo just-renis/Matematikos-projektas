@@ -29,7 +29,7 @@
         {
             if (isset($_POST["approve_".$row["id"]]))
             {
-                $sql = "INSERT INTO $table (username, password, approvedAt) VALUES ('".$row["username"]."','".$row["password"]."','".date("Y-m-d H:i:s", time())."')";
+                $sql = "INSERT INTO approvedteachers (username, password, addedAt) VALUES ('".$row["username"]."','".$row["password"]."','".date("Y-m-d H:i:s", time())."')";
                 mysqli_query($conn, $sql);
                 $sql = "DELETE FROM $table WHERE id=".$row["id"];
                 mysqli_query($conn, $sql);
