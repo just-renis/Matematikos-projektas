@@ -59,12 +59,67 @@ input[type=submit]:hover
     background-color: #e65c00;
 }
 
-p.errorDisplay 
+.error-container 
 {
-    color: red;
+    border: 1px solid #f44336;
+    background-color: #f2dede;
+    color: #a94442;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.error-container p 
+{
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 body
 {
     background-color: lightgreen;
+}
+
+#studentsHeader
+{
+    text-align: center;
+}
+
+.fancy-table 
+{
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.fancy-table th, .fancy-table td 
+{
+    padding: 8px;
+    text-align: left;
+}
+
+.fancy-table th 
+{
+    background-color: #4CAF50;
+    color: white;
+}
+
+.fancy-table tr:nth-child(even) 
+{
+    background-color: #f2f2f2;
+}
+
+.inline-container 
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.inline 
+{
+    margin-right: 10px;
 }

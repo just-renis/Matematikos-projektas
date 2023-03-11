@@ -1,6 +1,8 @@
 <?php
     require_once("connectToDatabase.php");
     $registerError = "";
+    $error = "";
+    $teacherId = $_SESSION['teacherId'];
     if (isset($_POST["registerButton"]))
     {
         if (empty($_POST["regUsername"]) || empty($_POST["regPassword"]) || empty($_POST["regConfirm_password"])) $registerError = "Tiktais norimas požymis gali būti neįrašomas";
@@ -20,9 +22,11 @@
                     {
                         $username = $_POST["regUsername"];
                         $password = password_hash($_POST["regPassword"], PASSWORD_DEFAULT);
-                        $id = $_SESSION['teacherId'];
                         $attribute = $_POST["regAttribute"];
-                        $sql = "INSERT INTO students (username, password, addedAt, level, points, luckIndicator, attribute, teacherId) VALUES ('$username', '$password','".date('Y-m-d H:i:s', time())."', 0, 0, 0, '$attribute', $id)";
+                        $sql = "INSERT INTO students (username, password, addedAt, attribute, firstLogin, teacherId) VALUES ('$username', '$password','".date('Y-m-d H:i:s', time())."', '$attribute', true, '$teacherId')";
+                        mysqli_query($conn, $sql);
+                        $studentId = mysqli_insert_id($conn);
+                        $sql = "INSERT INTO studentsresults (level, points, luckIndicator, studentId) VALUES (0, 0, 0, $studentId)";
                         mysqli_query($conn, $sql);
                         header("Location: ".$_SERVER['PHP_SELF']);
                     }
@@ -30,6 +34,59 @@
                 }
             }
         }
+    }
+    $students = mysqli_query($conn,"SELECT * FROM students");
+    $studentsRows = mysqli_fetch_all($students, MYSQLI_ASSOC);
+    foreach ($studentsRows as $row)
+    {
+        if (isset($_POST['recoverPassword'.$row['id']])) 
+        {
+            if (strlen($_POST['recPassword'.$row['id']]) < 6) $error = "Slaptažodis turėtų būti sudarytas bent jau iš 6 simbolių";
+            else
+            {
+                if ($_POST['recPassword'.$row['id']] !== $_POST['recConfirm_password'.$row['id']]) $error = "Slaptažodžiai nesutampa";
+                else
+                {
+                    $id = $row['id'];
+                    $password = password_hash($_POST['recPassword'.$row['id']], PASSWORD_DEFAULT);
+                    $sql = "UPDATE students SET password = '$password', firstLogin = true WHERE id = '$id'";
+                    mysqli_query($conn, $sql);
+                    header("Location: ".$_SERVER['PHP_SELF']);
+                }
+            }
+        }
+    }
+    function createApprovedHTMLTable($conn, $teacherId, $noDataText)
+    {
+        $students = mysqli_query($conn, "SELECT * FROM students WHERE teacherId = '$teacherId'");
+        $studentsRows = mysqli_fetch_all($students, MYSQLI_ASSOC);
+        echo "<table class='fancy-table'><tr>";
+        echo "<th colspan='3'><h1 id='studentsHeader'>Mano mokiniai</h1></th><tr>";
+        echo "<th>Vartotojo vardas</th>";
+        echo "<th>Patvirtinta šiuo laiku</th>";
+        echo "<th>Atstatyti mokinio slaptažodį</th></tr>";
+        if (sizeof($studentsRows) === 0) echo "<tr><td>$noDataText</td><td></td></tr>";
+        else 
+        {
+            foreach ($studentsRows as $row)
+            {
+                $id = $row['id'];
+                echo "<tr>";
+                echo "<td>".$row['username']."</td>";
+                echo "<td>".$row['addedAt']."</td>";
+                echo "<td style='width: 50%'>";
+                echo "<form method='post'>";
+                echo "<div class='inline-container'>";
+                echo "<input type='submit' class='inline' value='Atstatyti slaptažodį' name=recoverPassword".$id.">";
+                echo "<input type='password' class='inline' id=recPassword".$id." name=recPassword".$id." maxlength='100' style='width: 30%;' required>";
+                echo "<input type='password' class='inline' id=recConfirm_password".$id." name=recConfirm_password".$id." maxlength='100' style='width: 30%;' required>";
+                echo "</div>";
+                echo "</form>";
+                echo "</td>";
+                echo "</tr>";
+            }
+        }
+        echo "</table>";
     }
 ?>
 <!DOCTYPE html>
@@ -54,5 +111,11 @@
             </form>
             <p name="registerErrorDisplay" class="errorDisplay"><?php echo $registerError;?></p>
         </div>
+        <?php
+            createApprovedHTMLTable($conn, $teacherId, "Nėra jokių registruotų mokinių.");
+        ?>
+        <?php if (!empty($error)): ?>
+        <div class="error-container"><p name="errorDisplay" class="errorDisplay"><?php echo $error;?></p></div>
+        <?php endif; ?>
     </body>
 </html>

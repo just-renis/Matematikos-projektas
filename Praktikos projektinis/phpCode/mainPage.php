@@ -31,8 +31,9 @@
         {
             if ($_POST["logUsername"] === $row["username"] && password_verify($_POST["logPassword"], $row["password"]))
             {
-                $_SESSION['studentId'] = $row["id"];
-                header("location: ../startPageCode/startPage.php");
+                $_SESSION["studentId"] = $row["id"];
+                $_SESSION["firstLogin"] = $row["firstLogin"];
+                header("location: studentView.php");
                 exit;
             }
         }
@@ -58,7 +59,7 @@
                     {
                         $username = $_POST["regUsername"];
                         $password = password_hash($_POST["regPassword"], PASSWORD_DEFAULT);
-                        $sql = "INSERT INTO pendingteachers (username, password, date) VALUES ('$username','$password','".date('Y-m-d H:i:s', time())."')";
+                        $sql = "INSERT INTO pendingteachers (username, password, addedAt) VALUES ('$username','$password','".date('Y-m-d H:i:s', time())."')";
                         mysqli_query($conn, $sql);
                         header("Location: ".$_SERVER['PHP_SELF']);
                         exit;
@@ -95,7 +96,6 @@
                     <label for="regConfirm_password">Patvirtinkite slaptažodį:</label>
                     <input type="password" id="regConfirm_password" name="regConfirm_password" required><br><br>
                     <input type = "submit" value = "Registruotis" name="registerButton">
-                    <button id = "loginAsGuest" onclick=guestJoin()>Prisijungti kaip svečias</button>
                 </form>
                 <p name="registerErrorDisplay" class="errorDisplay"><?php echo $registerError;?></p>
             </div>
@@ -107,6 +107,7 @@
                     <label for="logPassword">Slaptažodis:</label>
                     <input type="password" id="logPassword" name="logPassword" required><br><br>
                     <input type="submit" value="Prisijungti" name = "loginButton">
+                    <button id = "loginAsGuest" onclick=guestJoin()>Prisijungti kaip svečias</button>
                 </form>
                 <p name="loginErrorDisplay" class="errorDisplay"><?php echo $loginError;?></p>
             </div>
