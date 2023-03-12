@@ -40,6 +40,8 @@ window.onload = function()
         document.getElementById("changeCircleButton").addEventListener('click', function() { document.getElementById("changeCircleButton").style.borderColor = "rgb(0, 200, 100)"; });
         document.getElementById("functionNameInput").addEventListener('click', function() { document.getElementById("functionNameInput").style.borderColor = "black"; });
     }
+    const testObject = new TestClass();
+    testObject.runTests();
 }
 async function initAnimations(graphAnimation)
 {
@@ -328,20 +330,20 @@ function nextLevel()
         case "Lygis 7.2":
         case "Lygis 8.2":
         case "Lygis 9.2":
-            window.location.href = "../startPageCode/startPage.html";
+            window.location.href = "../startPageCode/startPage.php";
             break;
         default:
             window.sessionStorage.setItem("isExample", false);
             window.sessionStorage.setItem("lygis", graphs[++Graph.graphNumber].graphName);
             window.sessionStorage.setItem("graphNumber", Graph.graphNumber);
-            window.location.href = "../levelCode/level.html";
+            window.location.href = "../levelCode/level.php";
     }
 }
 function showAnswer()
 {
     window.sessionStorage.setItem("isExample", true);
     window.sessionStorage.setItem("lygis", currentGraph.graphName);
-    window.location = "../levelCode/level.html";
+    window.location = "../levelCode/level.php";
 }
 function levelCompleted()
 {
@@ -381,9 +383,9 @@ function writeInfSymbol(isPositive)
 function repeatExample()
 {
     window.sessionStorage.setItem("isExample", true);
-    window.location.href = "../levelCode/level.html";
+    window.location.href = "../levelCode/level.php";
 }
 function goBack()
 {
-    window.location.href = "../startPageCode/startPage.html";
+    window.location.href = "../startPageCode/startPage.php";
 }

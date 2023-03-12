@@ -78,6 +78,7 @@ function animateInput(text, inputField)
         }
     }, 250);
 }
+
 function showClickedButton(circleElement, whichSide)
 {
     return new Promise(resolve => 

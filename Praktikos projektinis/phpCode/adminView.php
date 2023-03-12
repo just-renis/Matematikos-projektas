@@ -12,21 +12,6 @@
     {
         $pending = mysqli_query($conn, "SELECT * FROM $table");
         $pendingRows = mysqli_fetch_all($pending, MYSQLI_ASSOC);
-        echo "<table class='fancy-table'><tr>";
-        echo "<th>Vartotojo vardas</th>";
-        echo "<th>Registruotasi šiuo laiku</th>";
-        echo "<th>Patvirtinimas</th></tr>";
-        if (sizeof($pendingRows) === 0) echo "<tr><td>$noDataText</td><td></td><td></td></tr>";
-        else
-        {
-            foreach ($pendingRows as $row)
-            {
-                echo "<tr><td>".$row["username"]."</td>";
-                echo "<td>".$row["addedAt"]."</td>";
-                echo "<td><form method='post'><input type='submit' name='approve_".$row["id"]."' value='$buttonsText[0]'> <input type='submit' name='notApprove_".$row["id"]."' value='$buttonsText[1]'></form></td></tr>";
-            }
-        }
-        echo "</table>";
         foreach ($pendingRows as $row)
         {
             if (isset($_POST["approve_".$row["id"]]))
@@ -38,13 +23,28 @@
                 header("Location: ".$_SERVER['PHP_SELF']);
                 exit;
             }
-            else if (isset($_POST["notApprove_".$row["id"]]))
+            else if (isset($_POST["notApprove_".$row["id"]]))   
             {
                 $sql = "DELETE FROM $table WHERE id=".$row["id"];
                 mysqli_query($conn, $sql);
                 header("Location: ".$_SERVER['PHP_SELF']);
                 exit;
             }
+        }
+        if (sizeof($pendingRows) === 0) echo "<tr><td>$noDataText</td><td></td><td></td></tr>";
+        else
+        {
+            echo "<table class='fancy-table'><tr>";
+            echo "<th>Vartotojo vardas</th>";
+            echo "<th>Registruotasi šiuo laiku</th>";
+            echo "<th>Patvirtinimas</th></tr>";
+            foreach ($pendingRows as $row)
+            {
+                echo "<tr><td>".$row["username"]."</td>";
+                echo "<td>".$row["addedAt"]."</td>";
+                echo "<td><form method='post'><input type='submit' name='approve_".$row["id"]."' value='$buttonsText[0]'> <input type='submit' name='notApprove_".$row["id"]."' value='$buttonsText[1]'></form></td></tr>";
+            }
+            echo "</table>";
         }
     }
     function createApprovedHTMLTable($conn, $table, $noDataText)

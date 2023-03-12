@@ -28,5 +28,5 @@ function clearProgress()
     window.sessionStorage.setItem("lygis", null);
     window.sessionStorage.setItem("graphNumber", null);
     for (let i = 2; i <= levelAmount; i++) window.sessionStorage.setItem("level" + i, "locked");
-    window.location.href = "../startPageCode/startPage.html";
+    window.location.href = "../startPageCode/startPage.php";
 }
