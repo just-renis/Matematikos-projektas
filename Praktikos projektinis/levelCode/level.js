@@ -1,8 +1,10 @@
-let intervals = [];
+
+let isExample = window.sessionStorage.getItem("isExample");
 window.onload = function()
 {
     let levelName = window.sessionStorage.getItem("lygis");
-    if (levelName != "empty")
+    let graphAnimation = intervalAnimations[0];
+    if (levelName !== null)
     {
         for (let i = 0; i < graphs.length; i++)
         {
@@ -11,6 +13,7 @@ window.onload = function()
                 currentGraph = graphs[i];
                 document.getElementById("title").innerText = "Apibrėžimo sritis - " + currentGraph.graphName;
                 document.getElementById("levelTag").innerText = "Apibrėžimo sritis - " + currentGraph.graphName;
+                graphAnimation = intervalAnimations[i];
                 Graph.graphNumber = window.sessionStorage.getItem("graphNumber");
                 break;
             }
@@ -18,11 +21,34 @@ window.onload = function()
     }
     else currentGraph = graph[0];
     generateIntervals();
-    intervals[0].open = false;
-    intervals[intervals.length - 1].open = false;
+    if (isExample === "false")
+    {
+        intervals[0].open = false;
+        intervals[intervals.length - 1].open = false;
+    }
     initializeNewGraph();
     setColor();
+    if (isExample === "true") initAnimations(graphAnimation);
+    for (let i = 0; i < currentGraph.currentLevel; i++) 
+    {
+        if (i % 2 == 0) document.getElementById("rulesLeftSide").innerHTML += rules[i] + '<br>';
+        else document.getElementById("rulesRightSide").innerHTML += rules[i] + '<br>';
+    }
+    if (isExample === "false")
+    {
+        document.getElementById("apibrezimoSritis").addEventListener('click', function() { document.getElementById("apibrezimoSritis").style.borderColor = "black"; });
+        document.getElementById("changeCircleButton").addEventListener('click', function() { document.getElementById("changeCircleButton").style.borderColor = "rgb(0, 200, 100)"; });
+        document.getElementById("functionNameInput").addEventListener('click', function() { document.getElementById("functionNameInput").style.borderColor = "black"; });
+    }
+    const testObject = new TestClass();
+    testObject.runTests();
 }
+async function initAnimations(graphAnimation)
+{
+    for (let i = 0; i < circles.length; i++) await animateInterval(i, graphAnimation[i]);
+    animateInput(currentGraph.inputAnswer, document.getElementById("apibrezimoSritis"));
+}
+let intervals = [];
 function generateIntervals()
 {
     let intervalContainer = document.getElementById("intervalContainer");
@@ -30,6 +56,7 @@ function generateIntervals()
     let intervalAmount = needInfinities ? currentGraph.intervalSize / currentGraph.intervalStep + 2 : currentGraph.intervalSize / currentGraph.intervalStep;
     let labelValue = 0;
     let interval = null;
+    currentGraph.graphConfig[2] = correctScale() + "px";
     for (let i = 0; i <= intervalAmount; i++) 
     {
         if (needInfinities)
@@ -43,8 +70,26 @@ function generateIntervals()
         else interval = new Interval((labelValue / currentGraph.trueNumber).toLocaleString("de-DE"));
         intervalContainer.appendChild(interval.element);
         intervals[i] = interval;
-        intervals[i].position = (intervals[i].element.getBoundingClientRect().left + parseFloat(currentGraph.graphConfig[2]) * i - (document.getElementById("container").getBoundingClientRect().left) - 4.8 + parseFloat(currentGraph.graphConfig[1]) + parseFloat(currentGraph.graphConfig[2]));
+        intervals[i].position = (intervals[i].element.getBoundingClientRect().left + (parseFloat(currentGraph.graphConfig[2])) * i 
+        - (document.getElementById("container").getBoundingClientRect().left) - 4.8 + parseFloat(currentGraph.graphConfig[1]) + parseFloat(currentGraph.graphConfig[2]));
     }
+}
+function correctScale()
+{
+    let distance = parseFloat(currentGraph.graphConfig[2].slice(0, currentGraph.graphConfig[2].length - 2));
+    if (window.devicePixelRatio <= 1) return distance;
+    else if (window.devicePixelRatio <= 1.25) return distance + 1.15;
+    else if (window.devicePixelRatio <= 1.5) return distance + 0.65;
+    else if (window.devicePixelRatio <= 1.75) return distance + 0.3;
+    else if (window.devicePixelRatio <= 2) return distance;
+    else if (window.devicePixelRatio <= 2.25) return distance + 0.6;
+    else if (window.devicePixelRatio <= 2.5) return distance + 0.4;
+    else if (window.devicePixelRatio <= 2.75) return distance + 0.2; // unknown.
+    else if (window.devicePixelRatio <= 3) return distance;
+    else if (window.devicePixelRatio <= 3.25) return distance + 0.4; // unknown.
+    else if (window.devicePixelRatio <= 3.5) return distance + 0.3;
+    else if (window.devicePixelRatio <= 3.75) return distance + 0.15;
+    else return distance;
 }
 function circleDragSetupX(draggableCircle)
 {
@@ -194,7 +239,7 @@ function updateLabelPos(draggableCircle)
 }
 function initializeNewGraph()
 {
-    generateAxis("lineX", false, 2);
+    generateAxis("lineX", isExample, 2);
     circles =
     [
         new Circle(overlay.querySelector('#circle0'), overlay.querySelector('#line0'), "X", overlay.querySelector("#intervalLabel0"), currentGraph.start, overlay.querySelector("#circleLabel0"), intervals[0].position),
@@ -204,8 +249,11 @@ function initializeNewGraph()
     circles[1].intervalSpot = intervals.length - 1;
     currentGraph.setGraph();
     for (const circle of circles) updateLabelPos(circle);
-    circleDragSetupX(circles[0]);
-    circleDragSetupX(circles[1]);
+    if (isExample === "false")
+    {
+        circleDragSetupX(circles[0]);
+        circleDragSetupX(circles[1]);
+    }
     drawFilledArea(circles[0].getBounds().left + 13, 16, circles[1].getBounds().left - circles[0].getBounds().left, 480);
     let values = currentGraph.graphConfig[4].split(" ");
     for (let i = 0; i < values.length; i++) drawAdditionalLines(parseInt(values[i].slice(0, -1)), values[i][values[i].length - 1] == "t");
@@ -213,12 +261,12 @@ function initializeNewGraph()
 }
 function clearTheLevel()
 {
-    let deleteIds = ["axisX", "startLineX", "endLineX", "plotNegInf", "plotPosInf"];
+    let deleteIds = ["startLineX", "endLineX"];
     for (const deleteId of deleteIds) document.getElementById(deleteId).remove();
 }
 function checkIfCorrect()
 {
-    let answers = currentGraph.intervalAnswers.slice();
+    let answers = currentGraph.intervalAnswers;
     let correct = 0;
     let brackets = [];
     for (let i = 0; i < circles.length; i++)
@@ -234,7 +282,7 @@ function checkIfCorrect()
             }
         }
     }
-    if (answers.length != correct) levelFailed();
+    if (answers.length != correct) levelFailed(0);
     else
     {
         let input = document.getElementById("apibrezimoSritis").value;
@@ -242,15 +290,31 @@ function checkIfCorrect()
         {
             if (currentGraph.currentLevel > 5 && input.includes("="))
             {
-                if (brackets[0] == input.split("=")[1][0] && brackets[1] == input.slice(-1)[0] && currentGraph.inputAnswer == input) levelCompleted();
-                else levelFailed();
+                if (brackets[0] == currentGraph.brackets[0] && brackets[1] == currentGraph.brackets.slice(-1)[0])
+                {
+                    if (currentGraph.inputAnswer == input) levelCompleted();
+                    else levelFailed(1);
+                }
+                else levelFailed(2);
             }
-            else if (currentGraph.currentLevel == 5 && document.getElementById("functionNameInput").value == currentGraph.inputAnswer[0] && brackets[0] == input[0] && brackets[1] == input.slice(-1)[0] && currentGraph.inputAnswer.slice(1) == input) levelCompleted();
-            else if (brackets[0] == input[0] && brackets[1] == input.slice(-1)[0] && currentGraph.inputAnswer == input) levelCompleted();
-            else levelFailed();
+            else if (currentGraph.currentLevel == 5 && brackets[0] == currentGraph.brackets[0] && brackets[1] == currentGraph.brackets.slice(-1)[0])
+            {
+                if (document.getElementById("functionNameInput").value == currentGraph.inputAnswer[0])
+                {
+                    if (currentGraph.inputAnswer.slice(1) == input) levelCompleted();
+                    else levelFailed(1);
+                }
+                else levelFailed(3);
+            }
+            else if (brackets[0] == currentGraph.brackets[0] && brackets[1] == currentGraph.brackets.slice(-1)[0]) 
+            {
+                if (currentGraph.inputAnswer == input) levelCompleted();
+                else levelFailed(1);
+            }
+            else levelFailed(2);
         }
         else if (currentGraph.inputAnswer == input) levelCompleted();
-        else levelFailed();
+        else levelFailed(1);
     }
 }
 function nextLevel()
@@ -266,37 +330,62 @@ function nextLevel()
         case "Lygis 7.2":
         case "Lygis 8.2":
         case "Lygis 9.2":
-            window.location.href = "../startPageCode/startPage.html";
+            window.location.href = "../startPageCode/startPage.php";
             break;
         default:
+            window.sessionStorage.setItem("isExample", false);
             window.sessionStorage.setItem("lygis", graphs[++Graph.graphNumber].graphName);
             window.sessionStorage.setItem("graphNumber", Graph.graphNumber);
-            if (graphs[Graph.graphNumber].graphName.split(".")[1][0] != "0") window.location.href = "../levelCode/level.html";
-            else window.location.href = "../exampleLevelCode/exampleLevel.html";
+            window.location.href = "../levelCode/level.php";
     }
 }
 function showAnswer()
 {
+    window.sessionStorage.setItem("isExample", true);
     window.sessionStorage.setItem("lygis", currentGraph.graphName);
-    window.location = "../exampleLevelCode/exampleLevel.html";
+    window.location = "../levelCode/level.php";
 }
 function levelCompleted()
 {
     document.getElementById("ats").innerText = "Teisingai!";
-    document.getElementById("answerButton").style.backgroundColor = "rgb(0, 255, 100)";
-    document.getElementById("answerButton").innerText = "Kitas lygis";
-    document.getElementById("answerButton").onclick = nextLevel;
+    document.getElementById("answerButton").style.visibility = "hidden";
+    document.getElementById("nextLevelButton").style.visibility = "visible";
 }
-function levelFailed()
+function levelFailed(wrong)
 {
-    document.getElementById("ats").innerText = "Neteisingai.";
+    switch(wrong)
+    {
+        case 0:
+            for (let i = 0; i < circles.length; i++) circles[i].circle.style.borderColor = "red";
+            document.getElementById("ats").innerText = "Neteisinguose vietose skrituliukai.";
+            break;
+        case 1:
+            document.getElementById("apibrezimoSritis").style.borderColor = "red";
+            document.getElementById("ats").innerText = "Neteisingai užrašyta apibrėžimo sritis";
+            break;
+        case 2:
+            document.getElementById("changeCircleButton").style.borderColor = "red";
+            document.getElementById("ats").innerText = "Netinkamai yra nustatyti skrituliukų tipai grafike.";
+            break;
+        case 3:
+            document.getElementById("functionNameInput").style.borderColor = "red";
+            document.getElementById("ats").innerText = "Neteisingas funkcijos vardas.";
+            break;
+        default:
+            document.getElementById("ats").innerText = "Neteisingai.";
+    }
     document.getElementById("showAnswerButton").style.visibility = "visible";
 }
 function writeInfSymbol(isPositive)
 {
     document.getElementById("apibrezimoSritis").value += isPositive ? "+∞" : "-∞";
 }
+function repeatExample()
+{
+    window.sessionStorage.setItem("isExample", true);
+    window.location.href = "../levelCode/level.php";
+}
 function goBack()
 {
-    window.location.href = "../startPageCode/startPage.html";
+    window.location.href = "../startPageCode/startPage.php";
 }

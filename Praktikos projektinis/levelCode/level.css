@@ -104,7 +104,7 @@ button
     font-weight: bold;
     border: 3px solid rgb(0, 200, 100);
 }
-#showAnswerButton, #changeCircleButton, #negInfButton, #posInfButton
+#showAnswerButton, #changeCircleButton, #negInfButton, #posInfButton, #nextLevelButton, #repeatExample
 {
     visibility: hidden;
 }
@@ -112,6 +112,10 @@ button
 {
     margin-top: 5px;
     text-align: center;
+}
+#apibrezimoSritis
+{
+    border-color: black;
 }
 #apSritisLabel
 {
@@ -131,7 +135,7 @@ button
 {
     width: 20px;
     height: 20px;
-    margin-top: 30.4%;
+    margin-top: 20%;
     border-radius: 50%;
     background: transparent;
     border: solid transparent 3px;
@@ -167,4 +171,22 @@ button
     color: black;
     font-size: 20px;
     z-index: 3;
+}
+#functionNameInput
+{
+    border-color: black;
+}
+.rules
+{
+    top: 10%;
+    font-size: 18px;
+    color: black;
+}
+#rulesLeftSide
+{
+    right: 80%;
+}
+#rulesRightSide
+{
+    left: 80%;
 }

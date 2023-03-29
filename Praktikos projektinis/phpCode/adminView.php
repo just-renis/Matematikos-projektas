@@ -31,21 +31,21 @@
                 exit;
             }
         }
-        echo "<table class='fancy-table'><tr>";
-        echo "<th>Vartotojo vardas</th>";
-        echo "<th>Registruotasi šiuo laiku</th>";
-        echo "<th>Patvirtinimas</th></tr>";
         if (sizeof($pendingRows) === 0) echo "<tr><td>$noDataText</td><td></td><td></td></tr>";
-        else 
+        else
         {
+            echo "<table class='fancy-table'><tr>";
+            echo "<th>Vartotojo vardas</th>";
+            echo "<th>Registruotasi šiuo laiku</th>";
+            echo "<th>Patvirtinimas</th></tr>";
             foreach ($pendingRows as $row)
             {
                 echo "<tr><td>".$row["username"]."</td>";
                 echo "<td>".$row["addedAt"]."</td>";
                 echo "<td><form method='post'><input type='submit' name='approve_".$row["id"]."' value='$buttonsText[0]'> <input type='submit' name='notApprove_".$row["id"]."' value='$buttonsText[1]'></form></td></tr>";
             }
+            echo "</table>";
         }
-        echo "</table>";
     }
     function createApprovedHTMLTable($conn, $table, $noDataText)
     {
