@@ -1,6 +1,5 @@
-function disableNotNeededElements(isExample)
+function disableNotNeededElements()
 {
-    if (isExample === "true") document.getElementById("answerButton").style.visibility = "hidden";
     if (currentGraph.currentLevel > 1)
     {
         document.getElementById("apSritisBracket1").style.display = "none";
@@ -9,14 +8,28 @@ function disableNotNeededElements(isExample)
     if (currentGraph.currentLevel > 2) document.getElementById("changeCircleButton").style.visibility = "visible";
     if (currentGraph.currentLevel > 3)
     {
-        if (isExample === "false")
+        let button = document.getElementById("negInfButton");
+        if (button)
         {
             document.getElementById("negInfButton").style.visibility = "visible";
             document.getElementById("posInfButton").style.visibility = "visible";
         }
     }
-    else if (currentGraph.currentLevel < 4) document.getElementById("functionNameInput").style.display = "none";
-    if (currentGraph.currentLevel == 5) document.getElementById("apSritisLabel").innerText = "D(";
+    else if (currentGraph.currentLevel < 4)
+    {
+        let button = document.getElementById("negInfButton");
+        if (button) // If it is real level or example level.
+        {
+            document.getElementById("answerButton").innerText = "Patvirtinti atsakymą";
+            document.getElementById("answerButton").onclick = checkIfCorrect;
+            document.getElementById("ats").innerText = "";
+        }
+        document.getElementById("functionNameInput").style.visibility = "hidden";
+    }
+    if (currentGraph.currentLevel == 5)
+    {
+        document.getElementById("apSritisLabel").innerText = "D(";
+    }
     else
     {
         if (currentGraph.currentLevel > 4) document.getElementById("apSritisLabel").style.display = "none";
@@ -53,14 +66,14 @@ function generateAxis(lineClassName, isExample, circlesAmount)
     functionNameInput.style.type = "text";
     functionNameInput.maxLength = "1";
     functionNameInput.style.width = "10px";
-    if (isExample === "true") 
+    if (isExample) 
     {
         input.setAttribute("readonly", true);
         functionNameInput.setAttribute("readonly", true);
     }
     for (let i = 0; i < circlesAmount; i++) appendChilds(overlay, [lines[i], localCircles[i], intervalLabels[i], circleLabels[i]]);
     appendChilds(document.getElementById("apibrezimoSritiesContainer"), [apSritisLabel, functionNameInput, apSritisSecondLabel, apSritisBracket1, input, apSritisBracket2]);
-    disableNotNeededElements(isExample);
+    disableNotNeededElements();
 }
 function setElement(whichElement, id, className)
 {

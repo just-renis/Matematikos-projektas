@@ -1,10 +1,19 @@
+h1
+{
+    text-align: center;
+}
+#buttons
+{
+    margin-top: 5%;
+    text-align: center;
+}
 .container 
 {
     margin: auto;
     border: 5px solid green;
     position: relative;
     width: 700px !important;
-    height: 500px !important;
+    height: 500px!important;
 }
 .graph 
 {
@@ -104,7 +113,7 @@ button
     font-weight: bold;
     border: 3px solid rgb(0, 200, 100);
 }
-#showAnswerButton, #changeCircleButton, #negInfButton, #posInfButton
+#nextLevelButton, #changeCircleButton, #repeatExample
 {
     visibility: hidden;
 }
@@ -115,6 +124,13 @@ button
 }
 #apSritisLabel
 {
+    font-weight: bold;
+}
+#explanation
+{
+    margin-top: 1%;
+    text-align: center;
+    font-size: 20px;
     font-weight: bold;
 }
 #goBackButton
@@ -131,7 +147,7 @@ button
 {
     width: 20px;
     height: 20px;
-    margin-top: 30.4%;
+    margin-top: 34.5%;
     border-radius: 50%;
     background: transparent;
     border: solid transparent 3px;
@@ -146,13 +162,6 @@ button
 .infinityInterval
 {
     position: absolute;
-}
-#explanation
-{
-    margin-top: 1%;
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
 }
 #functionBlock
 {

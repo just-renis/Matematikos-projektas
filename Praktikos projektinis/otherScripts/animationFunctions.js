@@ -78,7 +78,6 @@ function animateInput(text, inputField)
         }
     }, 250);
 }
-
 function showClickedButton(circleElement, whichSide)
 {
     return new Promise(resolve => 
@@ -90,7 +89,6 @@ function showClickedButton(circleElement, whichSide)
         else bracket = whichSide == "left" ? "(" : ")";
         if (bracket != currentGraph.brackets[circleElement.index])
         {
-            selectionOnCircle(circleElement.circle);
             let intervalId = setInterval(function()
             {
                 const elapsedTime = Date.now() - startTime;
@@ -105,11 +103,6 @@ function showClickedButton(circleElement, whichSide)
         }
         else resolve();
     });
-}
-function selectionOnCircle(circle)
-{
-    for (let i = 0; i < circles.length; i++) circles[i].circle.style.borderColor = "black";
-    circle.style.borderColor = "rgb(0, 216, 230)";
 }
 function enableBlink(button, elapsedTime)
 {

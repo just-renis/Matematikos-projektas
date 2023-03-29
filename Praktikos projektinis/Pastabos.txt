@@ -30,15 +30,19 @@
 
 + 15. Jei yra galimybė 8 lygyje toje vietoje, kur viena grafiko dalis baigiasi, o kita prasideda, norėčiau kokios nors vertikalios linijos, kuri leistų tai aiškiai matyti.
 
-+ 8. Ar yra galimybė mokiniui nurodyti, kurioje vietoje jo atsakymas yra klaidingas? Kadangi mokinys turi atlikti daug žingsnių, gal galima apibraukti tai, kur suklydo atlikdamas užduotį?
-
-+ 12. 5 lygis. Užrašant atsakymą, gal galima apibraukti tą vietą, kur vaikas turi ieškoti funkcijos vardo, kad galėtų jį įrašyti į skliaustus?
 
 
-(-?) 9. Jei yra galimybė, ties begalybe neturėtų būti rutuliukų, tik punktyrinė linija.
+(+-?) 12. 5 lygis. Užrašant atsakymą, gal galima apibraukti tą vietą, kur vaikas turi ieškoti funkcijos vardo, kad galėtų jį įrašyti į skliaustus?
+
+(+-?) 9. Jei yra galimybė, ties begalybe neturėtų būti rutuliukų, tik punktyrinė linija.
 
 
->>> Užrašai šone, kurie lieka. Siūlau kiekviename lygyje įvesti po vieną/dvi naujas taisykles, kurios llieka šonė viso likusio žaidimo metu ++++++++++++++++++++++
+
+! 8. Ar yra galimybė mokiniui nurodyti, kurioje vietoje jo atsakymas yra klaidingas? Kadangi mokinys turi atlikti daug žingsnių, gal galima apibraukti tai, kur suklydo atlikdamas užduotį?
+
+
+
+>>> Užrašai šone, kurie lieka. Siūlau kiekviename lygyje įvesti po vieną/dvi naujas taisykles, kurios llieka šonė viso likusio žaidimo metu
 
 1 lygis:
 
