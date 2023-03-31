@@ -1,6 +1,18 @@
 let levelAmount = 9;
 window.onload = function() 
 {
+   /* $.ajax({
+        url: 'startPage.php',
+        method: 'GET',
+        success: function(data) {
+            // Assuming the returned data is a string, you can save it to the session storage like this:
+            console.log(data);
+            window.sessionStorage.setItem('lygis', data);
+        },
+        error: function() {
+            console.log('Error retrieving data from the server');
+        }
+    });*/
     if (window.sessionStorage.getItem("isExample") === null) window.sessionStorage.setItem("isExample", true);
     document.body.style.backgroundColor = '#'+ ('000000' + (Math.random()*0xFFFFFF<<0).toString(16)).slice(-6);
     for (let i = 1; i < levelAmount; i++)

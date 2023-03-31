@@ -56,24 +56,31 @@
             }
         }
     }
-    function createApprovedHTMLTable($conn, $teacherId, $noDataText)
+    function createStudentsTable($conn, $teacherId, $noDataText)
     {
-        $students = mysqli_query($conn, "SELECT * FROM students WHERE teacherId = '$teacherId'");
-        $studentsRows = mysqli_fetch_all($students, MYSQLI_ASSOC);
+        $studentsResults = mysqli_query($conn, "SELECT students.*, studentsresults.* FROM students 
+        JOIN studentsresults ON students.id = studentsresults.studentId WHERE students.teacherId = '$teacherId'");
+        $studentsResultsRows = mysqli_fetch_all($studentsResults, MYSQLI_ASSOC);
         echo "<table class='fancy-table'><tr>";
-        echo "<th colspan='3'><h1 id='studentsHeader'>Mano mokiniai</h1></th><tr>";
+        echo "<th colspan='6'><h1 id='studentsHeader'>Mano mokiniai</h1></th><tr>";
         echo "<th>Vartotojo vardas</th>";
         echo "<th>Patvirtinta šiuo laiku</th>";
+        echo "<th>Esamas lygis</th>";
+        echo "<th>Surinkti taškai</th>";
+        echo "<th>Sėkmės lygis</th>";
         echo "<th>Atstatyti mokinio slaptažodį</th></tr>";
-        if (sizeof($studentsRows) === 0) echo "<tr><td>$noDataText</td><td></td></tr>";
+        if (sizeof($studentsResultsRows) === 0) echo "<tr><td>$noDataText</td><td></td></tr>";
         else 
         {
-            foreach ($studentsRows as $row)
+            foreach ($studentsResultsRows as $row)
             {
                 $id = $row['id'];
                 echo "<tr>";
                 echo "<td>".$row['username']."</td>";
                 echo "<td>".$row['addedAt']."</td>";
+                echo "<td>".$row['level']."</td>";
+                echo "<td>".$row['points']."</td>";
+                echo "<td>".$row['luckIndicator']."</td>";
                 echo "<td style='width: 50%'>";
                 echo "<form method='post'>";
                 echo "<div class='inline-container'>";
@@ -112,7 +119,7 @@
             <p name="registerErrorDisplay" class="errorDisplay"><?php echo $registerError;?></p>
         </div>
         <?php
-            createApprovedHTMLTable($conn, $teacherId, "Nėra jokių registruotų mokinių.");
+            createStudentsTable($conn, $teacherId, "Nėra jokių registruotų mokinių.");
         ?>
         <?php if (!empty($error)): ?>
         <div class="error-container"><p name="errorDisplay" class="errorDisplay"><?php echo $error;?></p></div>

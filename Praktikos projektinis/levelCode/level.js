@@ -1,4 +1,3 @@
-
 let isExample = window.sessionStorage.getItem("isExample");
 window.onload = function()
 {
@@ -242,8 +241,10 @@ function initializeNewGraph()
     generateAxis("lineX", isExample, 2);
     circles =
     [
-        new Circle(overlay.querySelector('#circle0'), overlay.querySelector('#line0'), "X", overlay.querySelector("#intervalLabel0"), currentGraph.start, overlay.querySelector("#circleLabel0"), intervals[0].position),
-        new Circle(overlay.querySelector('#circle1'), overlay.querySelector('#line1'), "X", overlay.querySelector("#intervalLabel1"), currentGraph.end, overlay.querySelector("#circleLabel1"), intervals[intervals.length - 1].position)
+        new Circle(overlay.querySelector('#circle0'), overlay.querySelector('#line0'), "X", overlay.querySelector("#intervalLabel0"),
+        currentGraph.start, overlay.querySelector("#circleLabel0"), intervals[0].position),
+        new Circle(overlay.querySelector('#circle1'), overlay.querySelector('#line1'), "X", overlay.querySelector("#intervalLabel1"),
+        currentGraph.end, overlay.querySelector("#circleLabel1"), intervals[intervals.length - 1].position)
     ];
     circles[0].intervalSpot = 0;
     circles[1].intervalSpot = intervals.length - 1;

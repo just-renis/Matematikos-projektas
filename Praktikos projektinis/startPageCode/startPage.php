@@ -4,6 +4,7 @@
         <title>Lygių pasirinkimas</title>
         <link rel="stylesheet" href="startPage.css">
         <script src="startPage.js"></script>
+     </script>
     </head>
     <body>
         <button id="clearProgress" onclick="clearProgress()">Išvalyti progresą</button>

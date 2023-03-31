@@ -1,6 +1,6 @@
 <?php
     require_once("connectToDatabase.php");
-    $teachers = mysqli_query($conn,"SELECT * FROM approvedteachers");
+    $teachers = mysqli_query($conn,"SELECT * FROM teachers");
     $teachersRows = mysqli_fetch_all($teachers, MYSQLI_ASSOC);
     $admins = mysqli_query($conn, "SELECT * FROM admins");
     $adminsRows = mysqli_fetch_all($admins, MYSQLI_ASSOC);
@@ -10,15 +10,6 @@
     $loginError = "";
     if (isset($_POST["loginButton"]))
     {
-        foreach ($teachersRows as $row)
-        {
-            if ($_POST["logUsername"] === $row["username"] && password_verify($_POST["logPassword"], $row["password"])) 
-            {
-                $_SESSION['teacherId'] = $row["id"];
-                header("location: teacherView.php");
-                exit;
-            }
-        }
         foreach ($adminsRows as $row)
         {
             if ($_POST["logUsername"] === $row["username"] && password_verify($_POST["logPassword"], $row["password"]))
@@ -26,18 +17,41 @@
                 header("location: adminView.php");
                 exit;
             }
+            $loginError = "Neteisingas vartotojo vardas arba slaptažodis";
         }
         foreach ($studentsRows as $row)
         {
             if ($_POST["logUsername"] === $row["username"] && password_verify($_POST["logPassword"], $row["password"]))
             {
-                $_SESSION["studentId"] = $row["id"];
-                $_SESSION["firstLogin"] = $row["firstLogin"];
+                $id = $row['id'];
+                $studentResult = mysqli_query($conn, "SELECT * FROM studentsResults WHERE studentId = '$id'");
+                $studentResults = mysqli_fetch_assoc($studentResult);
+                $_SESSION["studentData"] = array
+                (
+                    "studentId" => $row["id"],
+                    "firstLogin" => $row["firstLogin"],
+                    "level" => $studentResults["level"]
+                );
                 header("location: studentView.php");
                 exit;
             }
+            $loginError = "Neteisingas vartotojo vardas arba slaptažodis";
         }
-        $loginError = "Neteisingas vartotojo vardas arba slaptažodis";
+        foreach ($teachersRows as $row)
+        {
+            if ($_POST["logUsername"] === $row["username"] && password_verify($_POST["logPassword"], $row["password"])) 
+            {
+                if ($row["isApproved"])
+                {
+                    $_SESSION['teacherId'] = $row["id"];
+                    header("location: teacherView.php");
+                    exit;
+                }
+                $loginError = "Jums administratorius nedavė prieigos";
+                break;
+            }
+            $loginError = "Neteisingas vartotojo vardas arba slaptažodis";
+        }
     }
     if (isset($_POST["registerButton"]))
     {
@@ -51,15 +65,12 @@
                 else
                 {
                     $usernameExists = false;
-                    $pendingTeachers = mysqli_query($conn,"SELECT * FROM pendingteachers");
-                    $pendingTeachersRows = mysqli_fetch_all($pendingTeachers, MYSQLI_ASSOC);
                     foreach ($teachersRows as $row) if ($_POST["regUsername"] === $row["username"]) $usernameExists = true;
-                    foreach ($pendingTeachersRows as $row) if ($_POST["regUsername"] === $row["username"]) $usernameExists = true;
                     if (!$usernameExists)
                     {
                         $username = $_POST["regUsername"];
                         $password = password_hash($_POST["regPassword"], PASSWORD_DEFAULT);
-                        $sql = "INSERT INTO pendingteachers (username, password, addedAt) VALUES ('$username','$password','".date('Y-m-d H:i:s', time())."')";
+                        $sql = "INSERT INTO teachers (username, password, addedAt, isApproved) VALUES ('$username','$password','".date('Y-m-d H:i:s', time())."', false)";
                         mysqli_query($conn, $sql);
                         header("Location: ".$_SERVER['PHP_SELF']);
                         exit;

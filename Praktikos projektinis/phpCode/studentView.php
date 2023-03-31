@@ -1,7 +1,7 @@
 <?php
     require_once("connectToDatabase.php");
     $error = "";
-    if ($_SESSION["firstLogin"])
+    if ($_SESSION["studentData"]["firstLogin"])
     {
         if (isset($_POST["changePasswordButton"]))
         {
@@ -15,7 +15,7 @@
                     else
                     {
                         $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-                        $id = $_SESSION['studentId'];
+                        $id = $_SESSION["studentData"]["studentId"];
                         $sql = "UPDATE students SET password = '$password', firstLogin = 'false' WHERE id = '$id'";
                         mysqli_query($conn, $sql);
                         header("Location: ../startPageCode/startPage.php");
